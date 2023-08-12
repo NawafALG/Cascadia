@@ -1,7 +1,14 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+
 public class PrintBoard {
-    int rows = 8;
+    int rows = 6;
     int cols = 8;
     Tile[][] obj;
+
+    String playername;
     PrintBoard(){
         obj = new Tile[rows][cols];
         for (int i = 0; i < rows; i++) {
@@ -11,11 +18,19 @@ public class PrintBoard {
         }
     }
     public void printColnum(){
+        System.out.print(Colors.HEADER1+"      ");
+        for(int i =1;i<=cols;i++) {
+            if(i == cols/2) System.out.print("      "+playername+"      ");
+            System.out.print("            ");
+
+        }
+        System.out.println(Colors.reset);
+
         System.out.print("      ");
-        for(int i =0;i<rows;i++) System.out.print("     "+i+"      ");
+        for(int i =1;i<=cols;i++) System.out.print("     "+i+"      ");
         System.out.println();
     }
-    public void init(){
+    public void print(){
         printColnum();
         obj[3][4].placed = true;
         obj[3][3].placed = true;
@@ -34,7 +49,8 @@ public class PrintBoard {
                 output = output.concat(obj[i][j].row2());
 
             System.out.println(output);
-            output = ""+i+" ";
+            int tempRowNum = i+1;
+            output = ""+tempRowNum+" ";
             if (i%2==0) output = output.concat("      ");
             for(int j=0;j<cols;j++)
                 output = output.concat(obj[i][j].row3());
@@ -48,4 +64,43 @@ public class PrintBoard {
             System.out.println(output);
         }
     }
+
+    public boolean isValidPlacement(int row, int col) {
+        if (row < 0 || row >= rows || col < 0 || col >= cols) {
+            return false; // Index is out of bounds
+        }
+
+        if (!obj[row][col].placed) {
+            boolean adjacentPlaced = false;
+            if (row > 0 && obj[row - 1][col].placed) {
+                adjacentPlaced = true;
+            }
+            if (row < rows - 1 && obj[row + 1][col].placed) {
+                adjacentPlaced = true;
+            }
+            if (row < rows - 1 && obj[row - 1][col+1].placed && row % 2 == 0) {
+                adjacentPlaced = true;
+            }
+            if (col > 0 && obj[row][col - 1].placed) {
+                adjacentPlaced = true;
+            }
+            if (col < cols - 1 && obj[row][col + 1].placed) {
+                adjacentPlaced = true;
+            }
+            return adjacentPlaced;
+        }
+        return false;
+    }
+
+    public boolean isValidAnimalTilePlacement(int row, int col, String AnimalType){
+        if (row < 0 || row >= rows || col < 0 || col >= cols) {
+            return false;
+        }
+        if(!obj[row][col].placed){
+            return false;
+        }
+        return obj[row][col].isValidAnimalTilePlacement(AnimalType);
+    }
+
+
 }

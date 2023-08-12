@@ -6,6 +6,8 @@ import java.util.Random;
 public class Tile {
     boolean placed = false;
 
+    boolean animaltileplaced = false;
+    int animalSelectedIndex;
     RandomInt rdm;
     String row1;
     String row2;
@@ -16,6 +18,8 @@ public class Tile {
 
     List<String> animalPoolDistinct;
 
+    
+    String colorfillLeft, colorfillRight;
     public Tile() {
         rdm = new RandomInt();
 
@@ -26,24 +30,20 @@ public class Tile {
         int clr1 = a.nextInt(5) + 1;
         int clr2 = b.nextInt(5) + 1;
 
-        String colorfillLeft, colorfillRight;
+        
         if (clr1 == 1) {
             colorfillLeft = Colors.darkgreen;
             upinfo = "FRST";
-        }
-        else if (clr1 == 2) {
+        } else if (clr1 == 2) {
             colorfillLeft = Colors.lightgreen;
             upinfo = "GRASS";
-        }
-        else if (clr1 == 3) {
+        } else if (clr1 == 3) {
             colorfillLeft = Colors.skyblue;
             upinfo = "RIVER";
-        }
-        else if (clr1 == 4) {
+        } else if (clr1 == 4) {
             colorfillLeft = Colors.brown;
             upinfo = "MNTAIN";
-        }
-        else {
+        } else {
             colorfillLeft = Colors.yellow;
             upinfo = "YLW";
         }
@@ -51,25 +51,20 @@ public class Tile {
         if (clr2 == 1) {
             colorfillRight = Colors.darkgreen;
             downinfo = "FRST";
-        }
-        else if (clr2 == 2) {
+        } else if (clr2 == 2) {
             colorfillRight = Colors.lightgreen;
             downinfo = "GRASS";
-        }
-        else if (clr2 == 3) {
+        } else if (clr2 == 3) {
             colorfillRight = Colors.skyblue;
             downinfo = "RIVER";
-        }
-        else if (clr2 == 4) {
+        } else if (clr2 == 4) {
             colorfillRight = Colors.brown;
             downinfo = "MNTAIN";
-        }
-        else {
+        } else {
             colorfillRight = Colors.yellow;
             downinfo = "YLW";
         }
-        row1 = colorfillLeft+"            "+Colors.reset;
-
+        row1 = colorfillLeft + "            " + Colors.reset;
 
 
         //   animals = {'B', 'H', 'E', 'S', 'F'};
@@ -77,80 +72,69 @@ public class Tile {
 
         int i = rdm.randomint(100);
 
-        List<String> animalPool= new ArrayList<>();
+        List<String> animalPool = new ArrayList<>();
 
-        if(upinfo.equals("FRST")  || downinfo.equals("FRST")){
+        if (upinfo.equals("FRST") || downinfo.equals("FRST")) {
             animalPool.add("E");
             animalPool.add("F");
             animalPool.add("B");
-        }
-        else if(upinfo.equals("GRASS") || downinfo.equals("GRASS")){
+        } else if (upinfo.equals("GRASS") || downinfo.equals("GRASS")) {
             animalPool.add("H");
             animalPool.add("F");
-        }
-        else if(upinfo.equals("RIVER") || downinfo.equals("RIVER")){
+        } else if (upinfo.equals("RIVER") || downinfo.equals("RIVER")) {
             animalPool.add("B");
             animalPool.add("S");
-        }
-        else if(upinfo.equals("MNTAIN") || downinfo.equals("MNTAIN")){
+        } else if (upinfo.equals("MNTAIN") || downinfo.equals("MNTAIN")) {
             animalPool.add("H");
             animalPool.add("S");
-        }
-        else if(upinfo.equals("YLW") || downinfo.equals("YLW")){
+        } else if (upinfo.equals("YLW") || downinfo.equals("YLW")) {
             animalPool.add("E");
             animalPool.add("H");
         }
         animalPoolDistinct = new ArrayList<>(new HashSet<>(animalPool));
         int animalCount;
-        if(i>66)
+        if (i > 66)
             animalCount = 3;
-        else if (i>33)
+        else if (i > 33)
             animalCount = 2;
         else
             animalCount = 1;
 
         animalPoolDistinct = getRandomItems(animalPoolDistinct, animalCount);
-
-
-        // choosing left diagnol or right diagnol at random
-        if(c.nextInt(100)%2 == 0){
-
-
-            if(animalPoolDistinct.size() == 3){
-                row2 = colorfillLeft+"   "+Colors.reset+" "+animalPoolDistinct.get(0)+"  "+animalPoolDistinct.get(1)+" "+colorfillRight+"   "+Colors.reset;
-                row3 = colorfillLeft+"   "+Colors.reset+" "+animalPoolDistinct.get(2)+"    "+colorfillRight+"   "+Colors.reset;
+        
+            // choosing left diagnol or right diagnol at random
+            if (c.nextInt(100) % 2 == 0) {
+    
+    
+                if (animalPoolDistinct.size() == 3) {
+                    row2 = colorfillLeft + "   " + Colors.reset + " " + animalPoolDistinct.get(0) + "  " + animalPoolDistinct.get(1) + " " + colorfillRight + "   " + Colors.reset;
+                    row3 = colorfillLeft + "   " + Colors.reset + " " + animalPoolDistinct.get(2) + "    " + colorfillRight + "   " + Colors.reset;
+                } else if (animalPoolDistinct.size() == 2) {
+                    row2 = colorfillLeft + "   " + Colors.reset + " " + animalPoolDistinct.get(0) + "  " + animalPoolDistinct.get(1) + " " + colorfillRight + "   " + Colors.reset;
+                    row3 = colorfillLeft + "   " + Colors.reset + "      " + colorfillRight + "   " + Colors.reset;
+                } else {
+                    row2 = colorfillLeft + "   " + Colors.reset + " " + animalPoolDistinct.get(0) + "    " + colorfillRight + "   " + Colors.reset;
+                    row3 = colorfillLeft + "   " + Colors.reset + "      " + colorfillRight + "   " + Colors.reset;
+                }
+    
+                leftinfo = upinfo;
+                rightinfo = downinfo;
+            } else {
+                if (animalPoolDistinct.size() == 3) {
+                    row2 = colorfillRight + "   " + Colors.reset + " " + animalPoolDistinct.get(0) + "  " + animalPoolDistinct.get(1) + " " + colorfillLeft + "   " + Colors.reset;
+                    row3 = colorfillRight + "   " + Colors.reset + " " + animalPoolDistinct.get(2) + "    " + colorfillLeft + "   " + Colors.reset;
+                } else if (animalPoolDistinct.size() == 2) {
+                    row2 = colorfillRight + "   " + Colors.reset + " " + animalPoolDistinct.get(0) + "  " + animalPoolDistinct.get(1) + " " + colorfillLeft + "   " + Colors.reset;
+                    row3 = colorfillRight + "   " + Colors.reset + "      " + colorfillLeft + "   " + Colors.reset;
+                } else {
+                    row2 = colorfillRight + "   " + Colors.reset + " " + animalPoolDistinct.get(0) + "    " + colorfillLeft + "   " + Colors.reset;
+                    row3 = colorfillRight + "   " + Colors.reset + "      " + colorfillLeft + "   " + Colors.reset;
+                }
+    
+                leftinfo = downinfo;
+                rightinfo = upinfo;
             }
-            else if(animalPoolDistinct.size() == 2){
-                row2 = colorfillLeft+"   "+Colors.reset+" "+animalPoolDistinct.get(0)+"  "+animalPoolDistinct.get(1)+" "+colorfillRight+"   "+Colors.reset;
-                row3 = colorfillLeft+"   "+Colors.reset+"      "+colorfillRight+"   "+Colors.reset;
-            }
-            else {
-                row2 = colorfillLeft+"   "+Colors.reset+" "+animalPoolDistinct.get(0)+"    "+colorfillRight+"   "+Colors.reset;
-                row3 = colorfillLeft+"   "+Colors.reset+"      "+colorfillRight+"   "+Colors.reset;
-            }
-
-
-            leftinfo = upinfo;
-            rightinfo = downinfo;
-        }
-        else{
-            if(animalPoolDistinct.size() == 3){
-                row2 = colorfillRight+"   "+Colors.reset+" "+animalPoolDistinct.get(0)+"  "+animalPoolDistinct.get(1)+" "+colorfillLeft+"   "+Colors.reset;
-                row3 = colorfillRight+"   "+Colors.reset+" "+animalPoolDistinct.get(2)+"    "+colorfillLeft+"   "+Colors.reset;
-            }
-            else if(animalPoolDistinct.size() == 2){
-                row2 = colorfillRight+"   "+Colors.reset+" "+animalPoolDistinct.get(0)+"  "+animalPoolDistinct.get(1)+" "+colorfillLeft+"   "+Colors.reset;
-                row3 = colorfillRight+"   "+Colors.reset+"      "+colorfillLeft+"   "+Colors.reset;
-            }
-            else {
-                row2 = colorfillRight+"   "+Colors.reset+" "+animalPoolDistinct.get(0)+"    "+colorfillLeft+"   "+Colors.reset;
-                row3 = colorfillRight+"   "+Colors.reset+"      "+colorfillLeft+"   "+Colors.reset;
-            }
-
-            leftinfo = downinfo;
-            rightinfo = upinfo;
-        }
-
+        
         row4 = colorfillRight+"            "+Colors.reset;
     }
 
@@ -195,5 +179,78 @@ public class Tile {
         if (!placed) out = "+-- ---- --+";
         else out = row4;
         return out;
+    }
+
+    public void updateRowsAnimalTilePlaced(){
+        // checking if right diagonal terrain and animal terrain has been placed
+        if (animaltileplaced && leftinfo.equals(upinfo)){
+            if (animalPoolDistinct.size() == 3) {
+                if(animalSelectedIndex == 0) {
+                    row2 = colorfillLeft + "   " + Colors.CHOSEN + " " + animalPoolDistinct.get(0) + " "+Colors.reset+" " + animalPoolDistinct.get(1) + " " + colorfillRight + "   " + Colors.reset;
+                    row3 = colorfillLeft + "   " + Colors.reset + " " + animalPoolDistinct.get(2) + "    " + colorfillRight + "   " + Colors.reset;
+                }
+                else if (animalSelectedIndex == 1){
+                    row2 = colorfillRight + "   " + Colors.reset + " " + animalPoolDistinct.get(0) + " "+Colors.CHOSEN+" " + animalPoolDistinct.get(1) + " " + colorfillLeft + "   " + Colors.reset;
+                    row3 = colorfillRight + "   " + Colors.reset + " " + animalPoolDistinct.get(2) + "    " + colorfillLeft + "   " + Colors.reset;
+                }
+                else{
+                    row2 = colorfillRight + "   " + Colors.reset + " " + animalPoolDistinct.get(0) + "  " + animalPoolDistinct.get(1) + " " + colorfillLeft + "   " + Colors.reset;
+                    row3 = colorfillRight + "   " + Colors.CHOSEN + " " + animalPoolDistinct.get(2) + " "+Colors.reset+"   " + colorfillLeft + "   " + Colors.reset;
+                }
+            }
+            else if (animalPoolDistinct.size() == 2) {
+                if(animalSelectedIndex == 0) {
+                    row2 = colorfillLeft + "   " + Colors.CHOSEN + " " + animalPoolDistinct.get(0) + " "+Colors.reset+" " + animalPoolDistinct.get(1) + " " + colorfillRight + "   " + Colors.reset;
+                    row3 = colorfillLeft + "   " + Colors.reset + "      " + colorfillRight + "   " + Colors.reset;
+                }
+                else{
+                    row2 = colorfillLeft + "   " + Colors.reset + " " + animalPoolDistinct.get(0) + " "+Colors.CHOSEN+" " + animalPoolDistinct.get(1) + " " + colorfillRight + "   " + Colors.reset;
+                    row3 = colorfillLeft + "   " + Colors.reset + "      " + colorfillRight + "   " + Colors.reset;
+                }
+            }
+            else {
+                row2 = colorfillLeft + "   " + Colors.CHOSEN + " " + animalPoolDistinct.get(0) + " "+Colors.reset+ "   " + colorfillRight + "   " + Colors.reset;
+                row3 = colorfillLeft + "   " + Colors.reset + "      " + colorfillRight + "   " + Colors.reset;
+            }
+        }
+        else{ // terrain left diagonally aligned
+            if (animalPoolDistinct.size() == 3) {
+                if(animalSelectedIndex == 0) {
+                    row2 = colorfillRight + "   " + Colors.CHOSEN + " " + animalPoolDistinct.get(0) + " "+Colors.reset+" " + animalPoolDistinct.get(1) + " " + colorfillLeft + "   " + Colors.reset;
+                    row3 = colorfillRight + "   " + Colors.reset + " " + animalPoolDistinct.get(2) + "    " + colorfillLeft + "   " + Colors.reset;
+                }
+                else if (animalSelectedIndex == 1){
+                    row2 = colorfillLeft + "   " + Colors.reset + " " + animalPoolDistinct.get(0) + " "+Colors.CHOSEN+" " + animalPoolDistinct.get(1) + " " + colorfillRight + "   " + Colors.reset;
+                    row3 = colorfillLeft + "   " + Colors.reset + " " + animalPoolDistinct.get(2) + "    " + colorfillRight + "   " + Colors.reset;
+                }
+                else{
+                    row2 = colorfillLeft + "   " + Colors.reset + " " + animalPoolDistinct.get(0) + "  " + animalPoolDistinct.get(1) + " " + colorfillRight + "   " + Colors.reset;
+                    row3 = colorfillLeft + "   " + Colors.CHOSEN + " " + animalPoolDistinct.get(2) + " "+Colors.reset+"   " + colorfillRight + "   " + Colors.reset;
+                }
+            }
+            else if (animalPoolDistinct.size() == 2) {
+                if(animalSelectedIndex == 0) {
+                    row2 = colorfillRight + "   " + Colors.CHOSEN + " " + animalPoolDistinct.get(0) + " "+Colors.reset+" " + animalPoolDistinct.get(1) + " " + colorfillLeft + "   " + Colors.reset;
+                    row3 = colorfillRight + "   " + Colors.reset + "      " + colorfillLeft + "   " + Colors.reset;
+                }
+                else{
+                    row2 = colorfillRight + "   " + Colors.reset + " " + animalPoolDistinct.get(0) + " "+Colors.CHOSEN+" " + animalPoolDistinct.get(1) + " " + colorfillLeft + "   " + Colors.reset;
+                    row3 = colorfillRight + "   " + Colors.reset + "      " + colorfillLeft + "   " + Colors.reset;
+                }
+            }
+            else {
+                row2 = colorfillRight + "   " + Colors.CHOSEN + " " + animalPoolDistinct.get(0) + " "+Colors.reset+ "   " + colorfillLeft + "   " + Colors.reset;
+                row3 = colorfillRight + "   " + Colors.reset + "      " + colorfillLeft + "   " + Colors.reset;
+            }
+        }
+    }
+    public boolean isValidAnimalTilePlacement(String AnimalType){
+        if(animalPoolDistinct.contains(AnimalType)){
+            animaltileplaced = true;
+            animalSelectedIndex = animalPoolDistinct.indexOf(AnimalType);
+            updateRowsAnimalTilePlaced();
+            return true;
+        }
+        return false;
     }
 }

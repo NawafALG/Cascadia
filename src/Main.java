@@ -7,7 +7,12 @@ public class Main {
 //        obj.print("1,2");
 //        System.out.print(obj.row1());
 
-        PrintBoard board = new PrintBoard();
-        board.init();
+//        PrintBoard board = new PrintBoard();
+//        board.init();
+
+        Game game = new Game();
+        game.startGame();
+
+        game.printTileChoices();
     }
 }

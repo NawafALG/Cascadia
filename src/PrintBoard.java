@@ -17,7 +17,9 @@ public class PrintBoard {
     }
     public void init(){
         printColnum();
-        obj[0][4].placed = true;
+        obj[3][4].placed = true;
+        obj[3][3].placed = true;
+        obj[2][3].placed = true;
         for(int i =0;i<rows;i++){
 
             String output = "  ";
@@ -45,7 +47,5 @@ public class PrintBoard {
 
             System.out.println(output);
         }
-
     }
-
 }

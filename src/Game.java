@@ -47,38 +47,43 @@ public class Game {
 
 
     public void printTileChoices(){
+        createtiles();
+
+        System.out.print("\n\n\t\t\t\t\tHabitat Tile Choices:\n\t\t\t\t\t");
+
         for(int i=1;i<5;i++)
             System.out.print("    #"+i+"          ");
         System.out.println();
 
 
-        String output = "    ";
+        String output = "\t\t\t\t\t    ";
         for(int j=0;j<4;j++){
             output = output.concat(tiles[j].row1());
             output = output.concat("    ");
         }
         System.out.println(output);
 
-        output = "    ";
+        output = "\t\t\t\t\t    ";
         for(int j=0;j<4;j++){
             output = output.concat(tiles[j].row2());
             output = output.concat("    ");
         }
         System.out.println(output);
 
-        output = "    ";
+        output = "\t\t\t\t\t    ";
         for(int j=0;j<4;j++){
             output = output.concat(tiles[j].row3());
             output = output.concat("    ");
         }
         System.out.println(output);
 
-        output = "    ";
+        output = "\t\t\t\t\t    ";
         for(int j=0;j<4;j++){
             output = output.concat(tiles[j].row4());
             output = output.concat("    ");
         }
         System.out.println(output);
+
 
         printAnimalTileChoices();
 
@@ -114,8 +119,10 @@ public class Game {
             board[pindex].print();
         }// habitat tile placement ends
 
+        printAnimalTileChoices();
+
         // animal tile placement starts
-        System.out.print("\nChoose your Animal tile:");
+        System.out.print("\nChoose your Animal Tile:");
         userChoice = scanner.nextInt();
         if(userChoice-1>4 || userChoice-1<1){
             while(userChoice-1<=4 && userChoice-1>0){
@@ -139,13 +146,21 @@ public class Game {
             }
         }
 
-        // toggle player index value
-        if(pindex == 0)
-            pindex = 1;
-        else
-            pindex = 0;
-
         board[pindex].print();
+
+        // toggle player index value
+//        if(pindex == 0)
+//            pindex = 1;
+//        else
+//            pindex = 0;
+
+        turnNumber++;
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Colors.space();
     }
 
 
@@ -159,11 +174,11 @@ public class Game {
 //
 //        List<String> chosenAnimals = getRandomItemsWithMaxDuplicates(animalPool, 4, 2);
 
-        System.out.println("\nAnimal Tile Choices:");
+        System.out.println("\n\t\t\t\t\tAnimal Tile Choices:");
         for (int i = 0; i < animalPool.size(); i++) {
             String animal = animalPool.get(i);
             String animalName = getAnimalName(animal);
-            System.out.println((i + 1) + ".  " + animal + "  ----->  " + animalName);
+            System.out.println("\t\t\t\t\t"+(i + 1) + ".  " + animalName);
         }
     }
 
@@ -276,5 +291,43 @@ public class Game {
         board[1].playername = player2Name;
     }
 
+    public void printGameOver(){
+        Colors.space();
+        System.out.println("\t\t\t ██████╗  █████╗ ███╗   ███╗███████╗    ███████╗███╗   ██╗██████╗ ███████╗");
+        System.out.println("\t\t\t██╔════╝ ██╔══██╗████╗ ████║██╔════╝    ██╔════╝████╗  ██║██╔══██╗██╔════╝");
+        System.out.println("\t\t\t██║  ███╗███████║██╔████╔██║█████╗      █████╗  ██╔██╗ ██║██║  ██║███████╗");
+        System.out.println("\t\t\t██║   ██║██╔══██║██║╚██╔╝██║██╔══╝      ██╔══╝  ██║╚██╗██║██║  ██║╚════██║");
+        System.out.println("\t\t\t╚██████╔╝██║  ██║██║ ╚═╝ ██║███████╗    ███████╗██║ ╚████║██████╔╝███████║");
+        System.out.println("\t\t\t ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝    ╚══════╝╚═╝  ╚═══╝╚═════╝ ╚══════╝");
+        System.out.println("\n\n\t\t\t                           Displaying Results...");
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Colors.space();
+        printScoreBoard();
+    }
+    public void printScoreBoard(){
+        System.out.println(Colors.HEADER3+"Players\t\t\t\t\t"+player1Name+"\t\t\t"+player2Name+""+Colors.reset);
+        System.out.println("Bear\t\t\t\t\t"+board[0].CalcBearScores()+"\t\t\t"+board[1].CalcBearScores());
+        System.out.println("Hawk\t\t\t\t\t"+""+"\t\t\t"+"");
+        System.out.println("Elk\t\t\t\t\t"+""+"\t\t\t"+"");
+        System.out.println("Salmon\t\t\t\t\t"+""+"\t\t\t"+"");
+        System.out.println("Fox\t\t\t\t\t"+""+"\t\t\t"+"");
+
+        System.out.println("\nForest\t\t\t\t\t"+""+"\t\t\t"+"");
+        System.out.println("Wetland\t\t\t\t\t"+""+"\t\t\t"+"");
+        System.out.println("River\t\t\t\t\t"+""+"\t\t\t"+"");
+        System.out.println("Mountain\t\t\t\t\t"+""+"\t\t\t"+"");
+        System.out.println("Prairie\t\t\t\t\t"+""+"\t\t\t"+"");
+
+
+        int scorePlayer1=0;
+        int scorePlayer2=0;
+
+        System.out.print("\n"+Colors.HEADER2+"Final score\t\t\t\t\t"+scorePlayer1+"\t\t\t"+scorePlayer2+Colors.reset);
+
+    }
 
 }

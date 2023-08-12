@@ -10,8 +10,8 @@ public class Colors {
     // highlight background colours
     public static final String CHOSEN = "\033[48;5;160m";    // RED
     public static final String HEADER = "\u001B[41m";    // Light RED
-    public static final String HEADER1 = "\u001B[41m";    // Light RED
-    public static final String HEADER2 = "\u001B[45m";    // Light RED
+    public static final String HEADER2 = "\033[1;91m";    // Light RED
+    public static final String HEADER3 = "\033[1;93m";    // Light RED
 
     public static void space(){
         for (int i = 0; i < 50; i++) {

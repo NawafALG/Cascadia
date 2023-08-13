@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
 //        System.out.println("\u001B[31mThis text is red!\u001B[0m");
@@ -27,11 +29,26 @@ public class Main {
         while(game.turnNumber<5) {
             game.PrintCurrentPlayerBoard();
 
-
+//            Scanner scanner = new Scanner(System.in);
+//            while(true){
+//                System.out.print("\nx: ");
+//                int x = scanner.nextInt();
+//
+//                System.out.print("y: ");
+//                int y = scanner.nextInt();
+//
+//                for(int i=1;i<=6;i++) {
+//                    System.out.print("\ni: "+i+"\n");
+//                    Score.scoretest(game.board[0], x - 1, y - 1, i);
+//
+//                }
+//            }
 
             game.printTileChoices();
+
+
             Colors.space();
-            Score.GetElkScore(game.board[0]);
+            Score.GetHawkScore(game.board[0]);
             Colors.space();
         }
 

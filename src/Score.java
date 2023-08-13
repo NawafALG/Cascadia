@@ -5,12 +5,18 @@ public class Score {
                           6    tile   3
                              5     4
     */
+    public static int calculateSpace(int col,int y) {
+        if (y % 2 != 0){
+            if (col % 2 == 1) return 0;
+            return 1;
+        }
+        else if(y%2 == 0){
+            if (col % 2 == 1) return 0;
+        }
+        return 1;
+    }
     public static String getNeighbour(PrintBoard obj, int x, int y, int pos) {
-        int displacement;
-        if(x%2==0)
-            displacement = 1;
-        else
-            displacement = 0;
+        int displacement= calculateSpace(x,y);
 
         int newRow = x;
         int newCol = y;
@@ -56,7 +62,7 @@ public class Score {
         if (obj.obj[newRow][newCol].animaltileplaced)
             return obj.obj[newRow][newCol].animalPoolDistinct.get(obj.obj[newRow][newCol].animalSelectedIndex);
         else
-            return null;
+            return " ";
     }
     public static void getNeighbourChecked(PrintBoard obj, int x, int y, int pos) {
         int displacement;
@@ -106,6 +112,56 @@ public class Score {
 
         obj.obj[newRow][newCol].checkedBool();
     }
+
+    public static String scoretest(PrintBoard obj, int x, int y, int pos){
+        int displacement= calculateSpace(x,y);
+
+        int newRow = x;
+        int newCol = y;
+
+        if (pos == 1 && newRow - 1 >= 0 && newCol - 1 + displacement >= 0) {
+            newRow--;
+            newCol += displacement - 1; // top left
+        }
+
+        if (pos == 2 && newRow - 1 >= 0 && newCol + displacement < obj.cols) {
+            newRow--;
+            newCol += displacement; // top right
+        }
+
+        if (pos == 3 && newCol + 1 < obj.cols) {
+            newCol++; // right
+        }
+
+        if (pos == 4 && newRow + 1 < obj.cols && newCol + displacement < obj.cols) {
+            newRow++;
+            newCol += displacement; // bottom right
+        }
+
+        if (pos == 5 && newRow + 1 < obj.cols && newCol - 1 + displacement < obj.cols) {
+            newRow++;
+            newCol += displacement - 1; // bottom left
+        }
+
+        if (pos == 6 && newCol - 1 >= 0) {
+            newCol--; // left
+        }
+
+        if (newRow == x && newCol == y) {
+            return null;
+        }
+
+        if (newRow < 0 || newRow >= obj.rows || newCol < 0 || newCol >= obj.cols) {
+            return null;
+        }
+        System.out.println("row: "+newRow);
+        System.out.println("col: "+newCol);
+
+        return null;
+
+    }
+
+
 
     /*
                               1     2
@@ -299,7 +355,27 @@ public class Score {
         return count;
     }
 
-
+    // hawk
+    public static int GetHawkScore(PrintBoard board){
+        int hawkscore = 0;
+        for (int row = 0; row < board.rows; row++) {
+            for (int col = 0; col < board.cols; col++) {
+                if(board.obj[row][col].getAnimalPlaced().equals("H")){
+                    int counter = 0;
+                    for(int j=1;j<=6;j++){
+                        if(getNeighbour(board, row, col, j) != null && !getNeighbour(board, row, col, j).equals("H")){
+                            counter++;
+                        }
+                    }
+                    if(counter == 6){
+                        hawkscore++;
+                    }
+                }
+            }
+        }
+        System.out.println("hawkscore: " + hawkscore);
+        return hawkscore;
+    }
 
 
 }

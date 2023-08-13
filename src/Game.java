@@ -91,35 +91,35 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
 
 
-
+        int userChoice,rowChoice, colChoice;
         // habitat tile placement
-        System.out.print("\nChoose your Habitat tile:");
-        int userChoice = scanner.nextInt();
-
-        System.out.print("in which Row to position Habitat tile in:");
-        int rowChoice = scanner.nextInt();
-
-        System.out.print("in which Column to position Habitat tile in:");
-        int colChoice = scanner.nextInt();
-
-        if(board[pindex].isValidPlacement(rowChoice-1, colChoice-1)){
-            board[pindex].obj[rowChoice-1][colChoice-1] = tiles[userChoice-1];
-            board[pindex].obj[rowChoice-1][colChoice-1].placed = true;
-            board[pindex].print();
-        }
-        else{
-            while(!board[pindex].isValidPlacement(rowChoice-1, colChoice-1)){
-                System.out.print("Invalid index!\nin which Row to position Habitat tile in:");
-                rowChoice = scanner.nextInt();
-                System.out.print("in which Column to position Habitat tile in:");
-                colChoice = scanner.nextInt();
-            }
-            board[pindex].obj[rowChoice-1][colChoice-1] = tiles[userChoice-1];
-            board[pindex].obj[rowChoice-1][colChoice-1].placed = true;
-            board[pindex].print();
-        }// habitat tile placement ends
-
-        printAnimalTileChoices();
+//        System.out.print("\nChoose your Habitat tile:");
+//        userChoice = scanner.nextInt();
+//
+//        System.out.print("in which Row to position Habitat tile in:");
+//        rowChoice = scanner.nextInt();
+//
+//        System.out.print("in which Column to position Habitat tile in:");
+//        colChoice = scanner.nextInt();
+//
+//        if(board[pindex].isValidPlacement(rowChoice-1, colChoice-1)){
+//            board[pindex].obj[rowChoice-1][colChoice-1] = tiles[userChoice-1];
+//            board[pindex].obj[rowChoice-1][colChoice-1].placed = true;
+//            board[pindex].print();
+//        }
+//        else{
+//            while(!board[pindex].isValidPlacement(rowChoice-1, colChoice-1)){
+//                System.out.print("Invalid index!\nin which Row to position Habitat tile in:");
+//                rowChoice = scanner.nextInt();
+//                System.out.print("in which Column to position Habitat tile in:");
+//                colChoice = scanner.nextInt();
+//            }
+//            board[pindex].obj[rowChoice-1][colChoice-1] = tiles[userChoice-1];
+//            board[pindex].obj[rowChoice-1][colChoice-1].placed = true;
+//            board[pindex].print();
+//        }// habitat tile placement ends
+//
+//        printAnimalTileChoices();
 
         // animal tile placement starts
         System.out.print("\nChoose your Animal Tile:");

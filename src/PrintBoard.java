@@ -65,6 +65,14 @@ public class PrintBoard {
         }
     }
 
+    public void TestAllTrue(){
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                obj[i][j].placed = true;
+            }
+        }
+    }
+
     public boolean isValidPlacement(int row, int col) {
         if (row < 0 || row >= rows || col < 0 || col >= cols) {
             return false; // Index is out of bounds
@@ -75,10 +83,16 @@ public class PrintBoard {
             if (row > 0 && obj[row - 1][col].placed) {
                 adjacentPlaced = true;
             }
+            if (row > 0 && obj[row + 1][col-1].placed && row % 2 != 0) {
+                adjacentPlaced = true;
+            }
             if (row < rows - 1 && obj[row + 1][col].placed) {
                 adjacentPlaced = true;
             }
-            if (row < rows - 1 && obj[row - 1][col+1].placed && row % 2 == 0) {
+//            if (row < rows - 1 && obj[row - 1][col+1].placed && row % 2 == 0) {
+//                adjacentPlaced = true;
+//            }
+            if (row > 0 && obj[row - 1][col+1].placed && row % 2 == 0) {
                 adjacentPlaced = true;
             }
             if (col > 0 && obj[row][col - 1].placed) {
@@ -105,26 +119,31 @@ public class PrintBoard {
         return obj[row][col].isValidAnimalTilePlacement(AnimalType);
     }
 
+    //############################################################################################################
+    // SCORE CALCULATIONS
+    // Bear
     public int CalcBearScores() {
-        int score = 0;
+        double score = 0;
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
-                if (obj[row][col].animalPoolDistinct.get(obj[row][col].animalSelectedIndex) == "B") {
+                if (obj[row][col].animalPoolDistinct.get(obj[row][col].animalSelectedIndex).equals("B")) {
                     int chunkSize = calculateBearChunkSize(row, col);
                     if (chunkSize >= 2) {
                         if (chunkSize == 2) {
-                            score += 5;
+                            score += 2.5;
                         } else if (chunkSize == 3) {
-                            score += 8;
+                            score += 8/3;
                         } else if (chunkSize >= 4) {
-                            score += 13;
+                            score += 3.25;
                         }
                     }
                 }
             }
         }
-        return score;
+        score = Math.round(score);
+
+        return (int)score;
     }
     public int calculateBearChunkSize(int startRow, int startCol) {
         int rows = obj.length;
@@ -149,6 +168,9 @@ public class PrintBoard {
 
         return size;
     }
-    
+    //--------------------------------------------------------------------------------------------------------
+    // ELK
+
+
 
 }

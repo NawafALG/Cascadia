@@ -20,6 +20,16 @@ public class Tile {
 
     
     String colorfillLeft, colorfillRight;
+
+    public String getAnimalPlaced(){
+        if(animaltileplaced)
+            return animalPoolDistinct.get(animalSelectedIndex);
+        else
+            return " ";
+    }
+    public void checkedBool(){
+        animalPoolDistinct.add(animalSelectedIndex, getAnimalPlaced().toLowerCase());
+    }
     public Tile() {
         rdm = new RandomInt();
 

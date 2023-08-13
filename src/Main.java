@@ -6,22 +6,22 @@ public class Main {
         Game game = new Game();
 
         // Gameloop
-        Colors.space(); // give space to game arena
-        game.printOptions();
-        game.askNames();
+//        Colors.space(); // give space to game arena
+//        game.printOptions();
+//        game.askNames();
 
         //testing
-//        game.board[0].TestAllTrue();
+        game.board[0].TestAllTrue();
 
-        while(game.turnNumber<3) {
+//        while(game.turnNumber<3) {
             game.PrintCurrentPlayerBoard();
+//
+//            game.printTileChoices();
+//            Colors.space();
+//            Colors.space();
+//        }
 
-            game.printTileChoices();
-            Colors.space();
-            Colors.space();
-        }
-
-
-        game.printGameOver();
+        Score.GetMaxHabitatChunkSize(game.board[0],"RIVER");
+//        game.printGameOver();
     }
 }

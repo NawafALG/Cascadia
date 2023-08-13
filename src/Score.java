@@ -164,7 +164,92 @@ public class Score {
 
     }
 
+    private static int HabitatnextX(PrintBoard obj, int x, int y, int pos){
+        int displacement= calculateSpace(x,y);
 
+        int newRow = x;
+        int newCol = y;
+
+        if (pos == 1 && newRow - 1 >= 0 && newCol - 1 + displacement >= 0) {
+            newRow--;
+            newCol += displacement - 1; // top left
+        }
+
+        if (pos == 2 && newRow - 1 >= 0 && newCol + displacement < obj.cols) {
+            newRow--;
+            newCol += displacement; // top right
+        }
+
+        if (pos == 3 && newCol + 1 < obj.cols) {
+            newCol++; // right
+        }
+
+        if (pos == 4 && newRow + 1 < obj.cols && newCol + displacement < obj.cols) {
+            newRow++;
+            newCol += displacement; // bottom right
+        }
+
+        if (pos == 5 && newRow + 1 < obj.cols && newCol - 1 + displacement < obj.cols) {
+            newRow++;
+            newCol += displacement - 1; // bottom left
+        }
+
+        if (pos == 6 && newCol - 1 >= 0) {
+            newCol--; // left
+        }
+
+//        if (newRow == x && newCol == y) {
+//            return null;
+//        }
+//
+//        if (newRow < 0 || newRow >= obj.rows || newCol < 0 || newCol >= obj.cols) {
+//            return null;
+//        }
+
+        return newRow;
+    }
+    private static int HabitatnextY(PrintBoard obj, int x, int y, int pos){
+        int displacement= calculateSpace(x,y);
+
+        int newRow = x;
+        int newCol = y;
+
+        if (pos == 1 && newRow - 1 >= 0 && newCol - 1 + displacement >= 0) {
+            newRow--;
+            newCol += displacement - 1; // top left
+        }
+
+        if (pos == 2 && newRow - 1 >= 0 && newCol + displacement < obj.cols) {
+            newRow--;
+            newCol += displacement; // top right
+        }
+
+        if (pos == 3 && newCol + 1 < obj.cols) {
+            newCol++; // right
+        }
+
+        if (pos == 4 && newRow + 1 < obj.cols && newCol + displacement < obj.cols) {
+            newRow++;
+            newCol += displacement; // bottom right
+        }
+
+        if (pos == 5 && newRow + 1 < obj.cols && newCol - 1 + displacement < obj.cols) {
+            newRow++;
+            newCol += displacement - 1; // bottom left
+        }
+
+        if (pos == 6 && newCol - 1 >= 0) {
+            newCol--; // left
+        }
+//        if (newRow == x && newCol == y) {
+//            return null;
+//        }
+//
+//        if (newRow < 0 || newRow >= obj.rows || newCol < 0 || newCol >= obj.cols) {
+//            return null;
+//        }
+        return newCol;
+    }
 
     /*
                               1     2
@@ -509,10 +594,12 @@ public class Score {
         }
         visited[row][col] = true;
         int size = 1;
-        size += Habitatdfs(board, visited, row + 1, col, targetChar);
-        size += Habitatdfs(board, visited, row - 1, col, targetChar);
-        size += Habitatdfs(board, visited, row, col + 1, targetChar);
-        size += Habitatdfs(board, visited, row, col - 1, targetChar);
+        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 1), HabitatnextY(board, row, col, 1), targetChar);
+        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 2), HabitatnextY(board, row, col, 2), targetChar);
+        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 3), HabitatnextY(board, row, col, 3), targetChar);
+        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 4), HabitatnextY(board, row, col, 4), targetChar);
+        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 5), HabitatnextY(board, row, col, 5), targetChar);
+        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 6), HabitatnextY(board, row, col, 6), targetChar);
 
         return size;
     }

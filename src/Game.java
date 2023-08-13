@@ -45,7 +45,6 @@ public class Game {
         board[pindex].print();
     }
 
-
     public void printTileChoices(){
         createtiles();
 
@@ -93,33 +92,33 @@ public class Game {
 
         int userChoice,rowChoice, colChoice;
         // habitat tile placement
-//        System.out.print("\nChoose your Habitat tile:");
-//        userChoice = scanner.nextInt();
-//
-//        System.out.print("in which Row to position Habitat tile in:");
-//        rowChoice = scanner.nextInt();
-//
-//        System.out.print("in which Column to position Habitat tile in:");
-//        colChoice = scanner.nextInt();
-//
-//        if(board[pindex].isValidPlacement(rowChoice-1, colChoice-1)){
-//            board[pindex].obj[rowChoice-1][colChoice-1] = tiles[userChoice-1];
-//            board[pindex].obj[rowChoice-1][colChoice-1].placed = true;
-//            board[pindex].print();
-//        }
-//        else{
-//            while(!board[pindex].isValidPlacement(rowChoice-1, colChoice-1)){
-//                System.out.print("Invalid index!\nin which Row to position Habitat tile in:");
-//                rowChoice = scanner.nextInt();
-//                System.out.print("in which Column to position Habitat tile in:");
-//                colChoice = scanner.nextInt();
-//            }
-//            board[pindex].obj[rowChoice-1][colChoice-1] = tiles[userChoice-1];
-//            board[pindex].obj[rowChoice-1][colChoice-1].placed = true;
-//            board[pindex].print();
-//        }// habitat tile placement ends
-//
-//        printAnimalTileChoices();
+        System.out.print("\nChoose your Habitat tile:");
+        userChoice = scanner.nextInt();
+
+        System.out.print("in which Row to position Habitat tile in:");
+        rowChoice = scanner.nextInt();
+
+        System.out.print("in which Column to position Habitat tile in:");
+        colChoice = scanner.nextInt();
+
+        if(board[pindex].isValidPlacement(rowChoice-1, colChoice-1)){
+            board[pindex].obj[rowChoice-1][colChoice-1] = tiles[userChoice-1];
+            board[pindex].obj[rowChoice-1][colChoice-1].placed = true;
+            board[pindex].print();
+        }
+        else{
+            while(!board[pindex].isValidPlacement(rowChoice-1, colChoice-1)){
+                System.out.print("Invalid index!\nin which Row to position Habitat tile in:");
+                rowChoice = scanner.nextInt();
+                System.out.print("in which Column to position Habitat tile in:");
+                colChoice = scanner.nextInt();
+            }
+            board[pindex].obj[rowChoice-1][colChoice-1] = tiles[userChoice-1];
+            board[pindex].obj[rowChoice-1][colChoice-1].placed = true;
+            board[pindex].print();
+        }// habitat tile placement ends
+
+        printAnimalTileChoices();
 
         // animal tile placement starts
         System.out.print("\nChoose your Animal Tile:");
@@ -311,16 +310,16 @@ public class Game {
     public void printScoreBoard(){
         System.out.println(Colors.HEADER3+"Players\t\t\t\t\t"+player1Name+"\t\t\t"+player2Name+""+Colors.reset);
         System.out.println("Bear\t\t\t\t\t"+board[0].CalcBearScores()+"\t\t\t"+board[1].CalcBearScores());
-        System.out.println("Hawk\t\t\t\t\t"+""+"\t\t\t"+"");
-        System.out.println("Elk\t\t\t\t\t"+""+"\t\t\t"+"");
-        System.out.println("Salmon\t\t\t\t\t"+""+"\t\t\t"+"");
-        System.out.println("Fox\t\t\t\t\t"+""+"\t\t\t"+"");
+        System.out.println("Hawk\t\t\t\t\t"+Score.GetHawkScore(board[0])+"\t\t\t"+Score.GetHawkScore(board[1]));
+        System.out.println("Elk\t\t\t\t\t"+Score.GetElkScore(board[0])+"\t\t\t"+Score.GetElkScore(board[1]));
+        System.out.println("Salmon\t\t\t\t\t"+Score.GetSalmonScore(board[0])+"\t\t\t"+Score.GetSalmonScore(board[1]));
+        System.out.println("Fox\t\t\t\t\t"+Score.GetFoxScore(board[0])+"\t\t\t"+Score.GetFoxScore(board[1]));
 
-        System.out.println("\nForest\t\t\t\t\t"+""+"\t\t\t"+"");
-        System.out.println("Wetland\t\t\t\t\t"+""+"\t\t\t"+"");
-        System.out.println("River\t\t\t\t\t"+""+"\t\t\t"+"");
-        System.out.println("Mountain\t\t\t\t\t"+""+"\t\t\t"+"");
-        System.out.println("Prairie\t\t\t\t\t"+""+"\t\t\t"+"");
+        System.out.println("\nForest\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "FRST")+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "FRST"));
+        System.out.println("Wetland\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "GRASS")+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "GRASS"));
+        System.out.println("River\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "RIVER")+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "RIVER"));
+        System.out.println("Mountain\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "MNTAIN")+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "MNTAIN"));
+        System.out.println("Prairie\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "YLW")+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "YLW"));
 
 
         int scorePlayer1=0;

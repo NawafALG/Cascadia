@@ -256,71 +256,109 @@ public class Score {
                            6    tile   3
                               5     4
      */
-    public static int GetElkScore(PrintBoard board){
-        int count4 = GetElkClusters(board,  4);
-        int count3 = GetElkClusters(board,  3);
-        int count2 = GetElkClusters(board,  2);
-        int count1 = GetElkClusters(board,  1);
 
 
-        return (13*count4) + (9*count3) + (5*count2) + (2*count1);
+
+    private static boolean elkcounted[][];
+    private static boolean Elkvalidtopright(PrintBoard board,int clusterSize, int x, int y){
+        boolean found = false;
+        if(!board.obj[x][y].getAnimalPlaced().equals("E"))
+            return false;
+
+        int trX=x, trY=y, count=1;
+        for(int i=0;i<clusterSize-1;i++){
+            trX = HabitatnextX(board, trX, trY, 2);
+            trY = HabitatnextY(board, trX, trY, 2);
+            if(trX >= 0 && trX < board.rows && trY >= 0 && trY< board.cols && getNeighbour(board, trX, trY, 2)!=null && getNeighbour(board, trX, trY, 2).equals("E") && elkcounted[trX][trY]==false){
+                count++;
+            }
+            else{
+                break;
+            }
+        }
+        if(count==clusterSize)
+            found=true;
+
+        return found;
     }
-//
+    private static boolean Elkvalidright(PrintBoard board,int clusterSize, int x, int y){
+        boolean found = false;
+        if(!board.obj[x][y].getAnimalPlaced().equals("E"))
+            return false;
+
+        int trX=x, trY=y, count=1;
+        for(int i=0;i<clusterSize-1;i++){
+            trX = HabitatnextX(board, trX, trY, 3);
+            trY = HabitatnextY(board, trX, trY, 3);
+            if(trX >= 0 && trX < board.rows && trY >= 0 && trY< board.cols && getNeighbour(board, trX, trY, 3)!=null && getNeighbour(board, trX, trY, 3).equals("E") && elkcounted[trX][trY]==false){
+                count++;
+            }
+            else{
+                break;
+            }
+        }
+        if(count==clusterSize)
+            found=true;
+
+        return found;
+    }
+    private static boolean Elkvalidbottomright(PrintBoard board,int clusterSize, int x, int y){
+        boolean found = false;
+        if(!board.obj[x][y].getAnimalPlaced().equals("E"))
+            return false;
+
+        int trX=x, trY=y, count=1;
+        for(int i=0;i<clusterSize-1;i++){
+            trX = HabitatnextX(board, trX, trY, 4);
+            trY = HabitatnextY(board, trX, trY, 4);
+            if(trX >= 0 && trX < board.rows && trY >= 0 && trY< board.cols && getNeighbour(board, trX, trY, 4)!=null && getNeighbour(board, trX, trY, 4).equals("E") && elkcounted[trX][trY]==false){
+                count++;
+            }
+            else{
+                break;
+            }
+        }
+        if(count==clusterSize)
+            found=true;
+
+        return found;
+    }
     public static int GetElkClusters(PrintBoard board, int clusterSize){
         int count = 0;
         for (int row = 0; row < board.rows; row++) {
             for (int col = 0; col < board.cols; col++) {
-                if(board.obj[row][col].getAnimalPlaced().equals("E")) {
+                if(board.obj[row][col].getAnimalPlaced().equals("E") ) {
                     int horizontalCount = 0;
                     int Count2 = 0;
                     int Count4 = 0;
 
-                    for (int i = 0; i < clusterSize; i++) {
-                        String right = getNeighbour(board, row, col, 3);
-                        if(right!= null && right.equals("E")) {
-                            if (col + i < board.cols ) {
-//                            if (col + i < cols && board[row][col + i] == targetChar) {
-                                horizontalCount++;
-                            }
-                        }
-
-                        String Topright = getNeighbour(board, row, col, 2);
-                        if(Topright!= null && Topright.equals("E")) {
-                            if (row + i < board.rows ) {
-                                Count2++;
-                            }
-                        }
-
-                        String Bottomright = getNeighbour(board, row, col, 4);
-                        if(Bottomright!= null && Bottomright.equals("E")) {
-                            if (row + i < board.rows ) {
-                                Count4++;
-                            }
-                        }
-                    }
-//                    if (horizontalCount == clusterSize) {
-//                        for (int i = 0; i < clusterSize; i++) {
-//                            board.obj[row][col + i].checkedBool();
-//                        }
-//                        count++;
-//                    }
-                    if (horizontalCount == clusterSize) {
-                        for (int i = 0; i < clusterSize; i++) {
-                            getNeighbourChecked(board, row, col, 3);
+                    if(Elkvalidtopright(board,clusterSize, row,col)){
+                        elkcounted[row][col] = true;
+                        int trX=row, trY=col;
+                        for(int i = 0 ;i<clusterSize-1;i++){
+                            trX = HabitatnextX(board, trX, trY, 2);
+                            trY = HabitatnextY(board, trX, trY, 2);
+                            elkcounted[trX][trY] = true;
                         }
                         count++;
                     }
-                    if (Count2 == clusterSize) {
-                        for (int i = 0; i < clusterSize; i++) {
-//                            board.obj[row + i][col].checkedBool();
-                            getNeighbourChecked(board, row, col, 2);
+                    if(Elkvalidright(board,clusterSize, row,col)){
+                        elkcounted[row][col] = true;
+                        int trX=row, trY=col;
+                        for(int i = 0 ;i<clusterSize-1;i++){
+                            trX = HabitatnextX(board, trX, trY, 3);
+                            trY = HabitatnextY(board, trX, trY, 3);
+                            elkcounted[trX][trY] = true;
                         }
                         count++;
                     }
-                    if (Count4 == clusterSize) {
-                        for (int i = 0; i < clusterSize; i++) {
-//                            board.obj[row + i][col].checkedBool();
-                            getNeighbourChecked(board, row, col, 4);
+                    if(Elkvalidbottomright(board,clusterSize, row,col)){
+                        elkcounted[row][col] = true;
+                        int trX=row, trY=col;
+                        for(int i = 0 ;i<clusterSize-1;i++){
+                            trX = HabitatnextX(board, trX, trY, 4);
+                            trY = HabitatnextY(board, trX, trY, 4);
+                            elkcounted[trX][trY] = true;
                         }
                         count++;
                     }
@@ -328,9 +366,10 @@ public class Score {
                 }
             }
         }
+
         return count;
     }
-//
+
 //    public static int countClusters(char[][] board, char targetChar, int clusterSize, boolean[][] counted) {
 //        int rows = board.length;
 //        int cols = board[0].length;
@@ -372,70 +411,17 @@ public class Score {
 
 
 
-//    public static void GetElkScore(PrintBoard board) {
-////        char[][] board = {
-////                {' ', ' ', ' ', 'E', 'E', 'E', 'E'},
-////                {' ', ' ', ' ', 'E', ' ', ' ', ' '},
-////                {' ', ' ', ' ', 'E', ' ', ' ', ' '},
-////                {' ', ' ', ' ', 'E', ' ', ' ', ' '},
-////                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-////                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-////                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-////                {' ', ' ', ' ', ' ', ' ', ' ', ' '},
-////                {' ', ' ', ' ', ' ', ' ', ' ', ' '}
-////        };
-////        boolean[][] counted = new boolean[rows][cols];
-//        boolean[][] counted = new boolean[board.rows][board.cols];
-//
-//        int count4 = countClusters(board, "E", 4, counted);
-//        int count3 = countClusters(board, "E", 3, counted);
-//        int count2 = countClusters(board, "E", 2, counted);
-//        int count1 = countClusters(board, "E", 1, counted);
-//
-//        System.out.println("Clusters of size 4: " + count4);
-//        System.out.println("Clusters of size 3: " + count3);
-//        System.out.println("Clusters of size 2: " + count2);
-//        System.out.println("Clusters of size 1: " + count1);
-//    }
+    public static int GetElkScore(PrintBoard board) {
 
+        elkcounted = new boolean[board.rows][board.cols];
 
-    public static int countClusters(PrintBoard board, String targetChar, int clusterSize, boolean[][] counted) {
-        int rows = board.rows;
-        int cols = board.cols;
-        int count = 0;
+        int count4 = GetElkClusters(board,  4);
+        int count3 = GetElkClusters(board,  3);
+        int count2 = GetElkClusters(board,  2);
+        int count1 = GetElkClusters(board,  1);
 
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                if (board.obj[row][col].getAnimalPlaced().equals(targetChar) && !counted[row][col]) {
-                    int horizontalCount = 0;
-                    int verticalCount = 0;
+        return (13*count4) + (9*count3) + (5*count2) + (2*(count1/3));
 
-                    for (int i = 0; i < clusterSize; i++) {
-                        if (col + i < cols && board.obj[row][col].getAnimalPlaced().equals(targetChar)) {
-                            horizontalCount++;
-                        }
-                        if (row + i < rows && board.obj[row][col].getAnimalPlaced().equals(targetChar)) {
-                            verticalCount++;
-                        }
-                    }
-
-                    if (horizontalCount == clusterSize) {
-                        for (int i = 0; i < clusterSize; i++) {
-                            counted[row][col + i] = true;
-                        }
-                        count++;
-                    }
-
-                    if (verticalCount == clusterSize) {
-                        for (int i = 0; i < clusterSize; i++) {
-                            counted[row + i][col] = true;
-                        }
-                        count++;
-                    }
-                }
-            }
-        }
-        return count;
     }
 
     // hawk
@@ -459,23 +445,23 @@ public class Score {
         }
 
 
-//        if(hawkscore == 1)
-//            hawkscore = 2;
-//        else if (hawkscore == 2)
-//            hawkscore = 5;
-//        else if (hawkscore == 3)
-//            hawkscore = 8;
-//        else if (hawkscore == 4)
-//            hawkscore = 11;
-//        else if (hawkscore == 5)
-//            hawkscore = 14;
-//        else if (hawkscore == 6)
-//            hawkscore = 18;
-//        else if (hawkscore == 7)
-//            hawkscore = 22;
-//        else if (hawkscore >= 8)
-//            hawkscore = 26;
-//
+        if(hawkscore == 1)
+            hawkscore = 2;
+        else if (hawkscore == 2)
+            hawkscore = 5;
+        else if (hawkscore == 3)
+            hawkscore = 8;
+        else if (hawkscore == 4)
+            hawkscore = 11;
+        else if (hawkscore == 5)
+            hawkscore = 14;
+        else if (hawkscore == 6)
+            hawkscore = 18;
+        else if (hawkscore == 7)
+            hawkscore = 22;
+        else if (hawkscore >= 8)
+            hawkscore = 26;
+
         return hawkscore;
     }
     // Foxes
@@ -496,16 +482,16 @@ public class Score {
             }
         }
 
-//        if(foxscore == 1)
-//            foxscore = 1;
-//        else if (foxscore == 2)
-//            foxscore = 2;
-//        else if (foxscore == 3)
-//            foxscore = 3;
-//        else if (foxscore == 4)
-//            foxscore = 4;
-//        else if (foxscore == 5)
-//            foxscore = 5;
+        if(foxscore == 1)
+            foxscore = 1;
+        else if (foxscore == 2)
+            foxscore = 2;
+        else if (foxscore == 3)
+            foxscore = 3;
+        else if (foxscore == 4)
+            foxscore = 4;
+        else if (foxscore == 5)
+            foxscore = 5;
         
         return foxscore;
     }
@@ -524,54 +510,63 @@ public class Score {
         int cols = board.cols;
         int count = 0;
 
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
+        float score = 0;
+
+        for (int row = 0; row < board.rows; row++) {
+            for (int col = 0; col < board.cols; col++) {
                 if (board.obj[row][col].getAnimalPlaced().equals("S")) {
-                    int[][] visited = new int[rows][cols];
-                    if (dfs(board, row, col, visited, 1)) {
-                        count++;
+                    int chunkSize = calculateSalmonChunkSize(board, row, col);
+                    if (chunkSize >= 2) {
+                        if (chunkSize == 1) {
+                            score += 2;
+                        }
+                        if (chunkSize == 2) {
+                            score += 5/2;
+                        }
+                        if (chunkSize == 3) {
+                            score += 8/3;
+                        }
+                        if (chunkSize == 4) {
+                            score += 12/4;
+                        }
+                        if (chunkSize == 5) {
+                            score += 16/5;
+                        }
+                        if (chunkSize == 6) {
+                            score += 20/6;
+                        }
+                        if (chunkSize >= 7) {
+                            score += 25/7;
+                        }
                     }
                 }
             }
         }
-//        if(count == 1)
-//            count = 2;
-//        else if (count == 2)
-//            count = 5;
-//        else if (count == 3)
-//            count = 8;
-//        else if (count == 4)
-//            count = 12;
-//        else if (count == 5)
-//            count = 16;
-//        else if (count == 6)
-//            count = 20;
-//        else if (count == 7)
-//            count = 25;
-        
-        return count;
+
+        return (int)Math.round(score);
     }
-    public static boolean dfs(PrintBoard board, int row, int col, int[][] visited, int length) {
-        if (row < 0 || row >= board.rows || col < 0 || col >= board.cols || visited[row][col] > 2) {
-            return false;
+    public static int calculateSalmonChunkSize(PrintBoard obj, int startRow, int startCol) {
+        int rows = obj.rows;
+        int cols = obj.cols;
+//        String targetChar = obj.obj[startRow][startCol].animalPoolDistinct.get(obj.obj[startRow][startCol].animalSelectedIndex);
+        boolean[][] visited = new boolean[rows][cols];
+
+        return SubFuncSalmonDfs(obj, visited, startRow, startCol, "S");
+    }
+    public static int SubFuncSalmonDfs( PrintBoard obj, boolean[][] visited, int row, int col, String targetChar) {
+        if (row < 0 || row >= obj.rows || col < 0 || col >= obj.cols || visited[row][col] || !obj.obj[row][col].animalPoolDistinct.get(obj.obj[row][col].animalSelectedIndex).equals(targetChar)) {
+            return 0;
         }
-        if (board.obj[row][col].getAnimalPlaced().equals("S")) {
-            visited[row][col]++;
-            if (length == 3) {
-                return true;
-            }
-            // Check all 6 neighbors
-            int[][] directions = {{-1, 0}, {-1, 1}, {0, 1}, {1, 0}, {1, -1}, {0, -1}};
-            for (int[] dir : directions) {
-                int newRow = row + dir[0];
-                int newCol = col + dir[1];
-                if (dfs(board, newRow, newCol, visited, length + 1)) {
-                    return true;
-                }
-            }
-            visited[row][col]--;
-        }
-        return false;
+        visited[row][col] = true;
+        int size = 1;
+        size += SubFuncSalmonDfs(obj, visited, HabitatnextX(obj, row, col, 1), HabitatnextY(obj, row, col, 1), targetChar);
+        size += SubFuncSalmonDfs(obj, visited, HabitatnextX(obj, row, col, 2), HabitatnextY(obj, row, col, 2), targetChar);
+        size += SubFuncSalmonDfs(obj, visited, HabitatnextX(obj, row, col, 3), HabitatnextY(obj, row, col, 3), targetChar);
+        size += SubFuncSalmonDfs(obj, visited, HabitatnextX(obj, row, col, 4), HabitatnextY(obj, row, col, 4), targetChar);
+        size += SubFuncSalmonDfs(obj, visited, HabitatnextX(obj, row, col, 5), HabitatnextY(obj, row, col, 5), targetChar);
+        size += SubFuncSalmonDfs(obj, visited, HabitatnextX(obj, row, col, 6), HabitatnextY(obj, row, col, 6), targetChar);
+
+        return size;
     }
     public static int GetBearScore(PrintBoard obj) {
         float score = 0;
@@ -594,7 +589,6 @@ public class Score {
     public static int calculateBearChunkSize(PrintBoard obj, int startRow, int startCol) {
         int rows = obj.rows;
         int cols = obj.cols;
-//        String targetChar = obj.obj[startRow][startCol].animalPoolDistinct.get(obj.obj[startRow][startCol].animalSelectedIndex);
         boolean[][] visited = new boolean[rows][cols];
 
         return SubFuncBearDfs(obj, visited, startRow, startCol, "B");
@@ -629,26 +623,75 @@ public class Score {
 
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
-                if (( board.obj[row][col].upinfo.equals(Habitat)  || ( board.obj[row][col].downinfo.equals(Habitat) ) && !visited[row][col])) {
-                    int chunkSize = Habitatdfs(board, visited, row, col, Habitat);
+                int chunkSize;
+                if (( board.obj[row][col].upinfo.equals(Habitat) && !visited[row][col])) {
+                    chunkSize = Habitatdfs(board, visited, row, col, Habitat, 1);
+                    largestChunkSize = Math.max(largestChunkSize, chunkSize);
+                }
+                if (( board.obj[row][col].upinfo.equals(Habitat) && !visited[row][col])) {
+                    chunkSize = Habitatdfs(board, visited, row, col, Habitat, 2);
+                    largestChunkSize = Math.max(largestChunkSize, chunkSize);
+                }
+                if (( board.obj[row][col].rightinfo.equals(Habitat) && !visited[row][col])) {
+                    chunkSize = Habitatdfs(board, visited, row, col, Habitat, 3);
+                    largestChunkSize = Math.max(largestChunkSize, chunkSize);
+                }
+                if (( board.obj[row][col].downinfo.equals(Habitat) && !visited[row][col])) {
+                    chunkSize = Habitatdfs(board, visited, row, col, Habitat, 4);
+                    largestChunkSize = Math.max(largestChunkSize, chunkSize);
+                }
+                if (( board.obj[row][col].downinfo.equals(Habitat) && !visited[row][col])) {
+                    chunkSize = Habitatdfs(board, visited, row, col, Habitat, 5);
+                    largestChunkSize = Math.max(largestChunkSize, chunkSize);
+                }
+                if (( board.obj[row][col].leftinfo.equals(Habitat) && !visited[row][col])) {
+                    chunkSize = Habitatdfs(board, visited, row, col, Habitat, 6);
                     largestChunkSize = Math.max(largestChunkSize, chunkSize);
                 }
             }
         }
+        for(int i=0;i<rows;i++){
+            if(i%2==0)
+                System.out.print(" ");
+            for(int j=0;j<cols;j++){
+
+                if(visited[i][j])
+                    System.out.print("1 ");
+                else
+                    System.out.print("0 ");
+            }
+            System.out.print("\n");
+        }
+        System.out.print("\n");
         return largestChunkSize;
     }
-    public static int Habitatdfs(PrintBoard board, boolean[][] visited, int row, int col, String targetChar) {
-        if (row < 0 || row >= board.rows || col < 0 || col >= board.cols || visited[row][col] || !( board.obj[row][col].upinfo.equals(targetChar)  || ( board.obj[row][col].downinfo.equals(targetChar)  ) )) {
+    public static int Habitatdfs(PrintBoard board, boolean[][] visited, int row, int col, String targetChar, int position) {
+        if (row < 0 || row >= board.rows || col < 0 || col >= board.cols || visited[row][col] ) {
             return 0;
         }
+        if(board.obj[row][col].placed==false)
+            return 0;
+        if(position==1 && !board.obj[row][col].downinfo.equals(targetChar))
+            return 0;
+        if(position==2 && !board.obj[row][col].downinfo.equals(targetChar))
+            return 0;
+        if(position==3 && !board.obj[row][col].leftinfo.equals(targetChar))
+            return 0;
+        if(position==4 && !board.obj[row][col].upinfo.equals(targetChar))
+            return 0;
+        if(position==5 && !board.obj[row][col].upinfo.equals(targetChar))
+            return 0;
+        if(position==6 && !board.obj[row][col].rightinfo.equals(targetChar))
+            return 0;
+
         visited[row][col] = true;
         int size = 1;
-        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 1), HabitatnextY(board, row, col, 1), targetChar);
-        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 2), HabitatnextY(board, row, col, 2), targetChar);
-        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 3), HabitatnextY(board, row, col, 3), targetChar);
-        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 4), HabitatnextY(board, row, col, 4), targetChar);
-        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 5), HabitatnextY(board, row, col, 5), targetChar);
-        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 6), HabitatnextY(board, row, col, 6), targetChar);
+        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 1), HabitatnextY(board, row, col, 1), targetChar,1);
+        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 2), HabitatnextY(board, row, col, 2), targetChar,2);
+        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 3), HabitatnextY(board, row, col, 3), targetChar,3);
+        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 4), HabitatnextY(board, row, col, 4), targetChar,4);
+        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 5), HabitatnextY(board, row, col, 5), targetChar,5);
+        size += Habitatdfs(board, visited, HabitatnextX(board, row, col, 6), HabitatnextY(board, row, col, 6), targetChar,6);
 
         return size;
     }

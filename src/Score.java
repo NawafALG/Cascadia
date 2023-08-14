@@ -261,7 +261,8 @@ public class Score {
         int count3 = GetElkClusters(board,  3);
         int count2 = GetElkClusters(board,  2);
         int count1 = GetElkClusters(board,  1);
-        
+
+
         return (13*count4) + (9*count3) + (5*count2) + (2*count1);
     }
 //
@@ -445,7 +446,8 @@ public class Score {
                 if(board.obj[row][col].getAnimalPlaced().equals("H")){
                     int counter = 0;
                     for(int j=1;j<=6;j++){
-                        if(getNeighbour(board, row, col, j) != null && !getNeighbour(board, row, col, j).equals("H")){
+                        String  tempval = getNeighbour(board, row, col, j);
+                        if(tempval == null || !getNeighbour(board, row, col, j).equals("H")){
                             counter++;
                         }
                     }
@@ -455,24 +457,25 @@ public class Score {
                 }
             }
         }
-        
-        if(hawkscore == 1)
-            hawkscore = 2;
-        else if (hawkscore == 2) 
-            hawkscore = 5;
-        else if (hawkscore == 3)
-            hawkscore = 8;
-        else if (hawkscore == 4)
-            hawkscore = 11;
-        else if (hawkscore == 5)
-            hawkscore = 14;
-        else if (hawkscore == 6)
-            hawkscore = 18;
-        else if (hawkscore == 7)
-            hawkscore = 22;
-        else if (hawkscore >= 8)
-            hawkscore = 26;
-        
+
+
+//        if(hawkscore == 1)
+//            hawkscore = 2;
+//        else if (hawkscore == 2)
+//            hawkscore = 5;
+//        else if (hawkscore == 3)
+//            hawkscore = 8;
+//        else if (hawkscore == 4)
+//            hawkscore = 11;
+//        else if (hawkscore == 5)
+//            hawkscore = 14;
+//        else if (hawkscore == 6)
+//            hawkscore = 18;
+//        else if (hawkscore == 7)
+//            hawkscore = 22;
+//        else if (hawkscore >= 8)
+//            hawkscore = 26;
+//
         return hawkscore;
     }
     // Foxes
@@ -484,24 +487,25 @@ public class Score {
                 if(board.obj[row][col].getAnimalPlaced().equals("F")){
                     ArrayList<String> neighbouringAnimals = new ArrayList<>();
                     for(int j=1;j<=6;j++){
-                        neighbouringAnimals.add(getNeighbour(board, row, col, j));
-//                        System.out.println("neighboura: " +getNeighbour(board, row, col, j));
+                        String tempval = getNeighbour(board, row, col, j);
+                        if ( tempval != null && !tempval.equals(" "))
+                            neighbouringAnimals.add(getNeighbour(board, row, col, j));
                     }
-                    foxscore = countUniqueChars(neighbouringAnimals);
+                    foxscore += countUniqueChars(neighbouringAnimals);
                 }
             }
         }
 
-        if(foxscore == 1)
-            foxscore = 1;
-        else if (foxscore == 2)
-            foxscore = 2;
-        else if (foxscore == 3)
-            foxscore = 3;
-        else if (foxscore == 4)
-            foxscore = 4;
-        else if (foxscore == 5)
-            foxscore = 5;
+//        if(foxscore == 1)
+//            foxscore = 1;
+//        else if (foxscore == 2)
+//            foxscore = 2;
+//        else if (foxscore == 3)
+//            foxscore = 3;
+//        else if (foxscore == 4)
+//            foxscore = 4;
+//        else if (foxscore == 5)
+//            foxscore = 5;
         
         return foxscore;
     }
@@ -530,20 +534,20 @@ public class Score {
                 }
             }
         }
-        if(count == 1)
-            count = 2;
-        else if (count == 2)
-            count = 5;
-        else if (count == 3)
-            count = 8;
-        else if (count == 4)
-            count = 12;
-        else if (count == 5)
-            count = 16;
-        else if (count == 6)
-            count = 20;
-        else if (count == 7)
-            count = 25;
+//        if(count == 1)
+//            count = 2;
+//        else if (count == 2)
+//            count = 5;
+//        else if (count == 3)
+//            count = 8;
+//        else if (count == 4)
+//            count = 12;
+//        else if (count == 5)
+//            count = 16;
+//        else if (count == 6)
+//            count = 20;
+//        else if (count == 7)
+//            count = 25;
         
         return count;
     }
@@ -569,6 +573,52 @@ public class Score {
         }
         return false;
     }
+    public static int GetBearScore(PrintBoard obj) {
+        float score = 0;
+
+        for (int row = 0; row < obj.rows; row++) {
+            for (int col = 0; col < obj.cols; col++) {
+                if (obj.obj[row][col].getAnimalPlaced().equals("B")) {
+                    int chunkSize = calculateBearChunkSize(obj, row, col);
+                    if (chunkSize >= 2) {
+                        if (chunkSize == 2) {
+                            score += 0.5;
+                        }
+                    }
+                }
+            }
+        }
+
+        return (int)score;
+    }
+    public static int calculateBearChunkSize(PrintBoard obj, int startRow, int startCol) {
+        int rows = obj.rows;
+        int cols = obj.cols;
+//        String targetChar = obj.obj[startRow][startCol].animalPoolDistinct.get(obj.obj[startRow][startCol].animalSelectedIndex);
+        boolean[][] visited = new boolean[rows][cols];
+
+        return SubFuncBearDfs(obj, visited, startRow, startCol, "B");
+    }
+    public static int SubFuncBearDfs( PrintBoard obj, boolean[][] visited, int row, int col, String targetChar) {
+        if (row < 0 || row >= obj.rows || col < 0 || col >= obj.cols || visited[row][col] || !obj.obj[row][col].animalPoolDistinct.get(obj.obj[row][col].animalSelectedIndex).equals(targetChar)) {
+            return 0;
+        }
+
+        visited[row][col] = true;
+
+        int size = 1;
+        size += SubFuncBearDfs(obj, visited, HabitatnextX(obj, row, col, 1), HabitatnextY(obj, row, col, 1), targetChar);
+        size += SubFuncBearDfs(obj, visited, HabitatnextX(obj, row, col, 2), HabitatnextY(obj, row, col, 2), targetChar);
+        size += SubFuncBearDfs(obj, visited, HabitatnextX(obj, row, col, 3), HabitatnextY(obj, row, col, 3), targetChar);
+        size += SubFuncBearDfs(obj, visited, HabitatnextX(obj, row, col, 4), HabitatnextY(obj, row, col, 4), targetChar);
+        size += SubFuncBearDfs(obj, visited, HabitatnextX(obj, row, col, 5), HabitatnextY(obj, row, col, 5), targetChar);
+        size += SubFuncBearDfs(obj, visited, HabitatnextX(obj, row, col, 6), HabitatnextY(obj, row, col, 6), targetChar);
+
+        return size;
+    }
+
+
+
 
     public static int GetMaxHabitatChunkSize(PrintBoard board, String Habitat){
         int rows = board.rows;
@@ -585,7 +635,6 @@ public class Score {
                 }
             }
         }
-        System.out.println("chunk: " + largestChunkSize);
         return largestChunkSize;
     }
     public static int Habitatdfs(PrintBoard board, boolean[][] visited, int row, int col, String targetChar) {

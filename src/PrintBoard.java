@@ -4,8 +4,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class PrintBoard {
-    int rows = 6;
-    int cols = 8;
+    int rows = 5;
+    int cols = 5;
     Tile[][] obj;
 
     String playername;
@@ -73,6 +73,18 @@ public class PrintBoard {
         }
     }
 
+
+    public void TestAnimalsPlaced(){
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                obj[i][j].animalSelectedIndex = 0;
+                obj[i][j].animaltileplaced = true;
+                obj[i][j].updateRowsAnimalTilePlaced();
+
+            }
+        }
+    }
+
     public boolean isValidPlacement(int row, int col) {
         if (row < 0 || row >= rows || col < 0 || col >= cols) {
             return false; // Index is out of bounds
@@ -118,59 +130,5 @@ public class PrintBoard {
         }
         return obj[row][col].isValidAnimalTilePlacement(AnimalType);
     }
-
-    //############################################################################################################
-    // SCORE CALCULATIONS
-    // Bear
-    public int CalcBearScores() {
-        double score = 0;
-
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                if (obj[row][col].animalPoolDistinct.get(obj[row][col].animalSelectedIndex).equals("B")) {
-                    int chunkSize = calculateBearChunkSize(row, col);
-                    if (chunkSize >= 2) {
-                        if (chunkSize == 2) {
-                            score += 2.5;
-                        } else if (chunkSize == 3) {
-                            score += 8/3;
-                        } else if (chunkSize >= 4) {
-                            score += 3.25;
-                        }
-                    }
-                }
-            }
-        }
-        score = Math.round(score);
-
-        return (int)score;
-    }
-    public int calculateBearChunkSize(int startRow, int startCol) {
-        int rows = obj.length;
-        int cols = obj[0].length;
-        String targetChar = obj[startRow][startCol].animalPoolDistinct.get(obj[startRow][startCol].animalSelectedIndex);
-        boolean[][] visited = new boolean[rows][cols];
-
-        return SubFuncBearDfs(visited, startRow, startCol, targetChar);
-    }
-    public int SubFuncBearDfs( boolean[][] visited, int row, int col, String targetChar) {
-        if (row < 0 || row >= obj.length || col < 0 || col >= obj[0].length || visited[row][col] || !obj[row][col].animalPoolDistinct.get(obj[row][col].animalSelectedIndex).equals(targetChar)) {
-            return 0;
-        }
-
-        visited[row][col] = true;
-
-        int size = 1;
-        size += SubFuncBearDfs(visited, row + 1, col, targetChar);
-        size += SubFuncBearDfs(visited, row - 1, col, targetChar);
-        size += SubFuncBearDfs(visited, row, col + 1, targetChar);
-        size += SubFuncBearDfs(visited, row, col - 1, targetChar);
-
-        return size;
-    }
-    //--------------------------------------------------------------------------------------------------------
-    // ELK
-
-
 
 }

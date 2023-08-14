@@ -12,6 +12,7 @@ public class Main {
 
         //testing
         game.board[0].TestAllTrue();
+        game.board[0].TestAnimalsPlaced();
 
 //        while(game.turnNumber<3) {
             game.PrintCurrentPlayerBoard();
@@ -21,7 +22,8 @@ public class Main {
 //            Colors.space();
 //        }
 
-        Score.GetMaxHabitatChunkSize(game.board[0],"RIVER");
+//        Score.GetMaxHabitatChunkSize(game.board[0],"RIVER");
 //        game.printGameOver();
+        game.printScoreBoard();
     }
 }

@@ -2,6 +2,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+/*
+* each tile has habitats residing within aswell as animal (which will be placed in future)
+*
+*
+*
+* */
+
+
 
 public class Tile {
     boolean placed = false;
@@ -30,6 +38,11 @@ public class Tile {
     public void checkedBool(){
         animalPoolDistinct.add(animalSelectedIndex, getAnimalPlaced().toLowerCase());
     }
+
+    // this constructor generates the habitats records the habitats in some variables aswell as gives it colors
+    // here the all possible animals aswell as the suitablility of animal is also decided
+    // for eg in forest fox, elk, bears are only suitable
+
     public Tile() {
         rdm = new RandomInt();
 
@@ -166,6 +179,7 @@ public class Tile {
         return randomItems;
     }
 
+    // these funcs returns the graphics which will be displayed on TUI
     public String row1(){
         String out;
         if (!placed) out = "+-- ---- --+";

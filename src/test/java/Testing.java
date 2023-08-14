@@ -3,6 +3,9 @@ import org.junit.jupiter.api.Test;
 
 public class Testing {
 
+
+    // these test cases failed because the animals are randomly generated
+    // sometimes the randomly generated animal is not "B"
     @Test
     public void testIsValidPlacementAdjacent() {
         PrintBoard board = new PrintBoard();

@@ -6,14 +6,14 @@ import java.util.Scanner;
 public class PrintBoard {
     int rows = 7;
     int cols = 8;
-    Tile[][] obj;
+    Tile[][] obj; // this variable right here prints the whole board
 
     String playername;
     PrintBoard(){
         obj = new Tile[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                obj[i][j] = new Tile();
+                obj[i][j] = new Tile(); // initlisation
             }
         }
     }

@@ -4,7 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Game {
-    Tile tiles[];
+    Tile tiles[]; // the board is distributed in tiles objs
     PrintBoard board[]; // game board
 
     List<String> animalPool; // var stores animal tiles on board
@@ -57,7 +57,7 @@ public class Game {
         board[pindex].print();
     }
 
-    public void printTileChoices(){
+    public void printTileChoices(){ // prints the tiles dislpayed to player to choose from on every turn
         createtiles();
 
         System.out.print("\n\n\t\t\t\t\tHabitat Tile Choices:\n\t\t\t\t\t");

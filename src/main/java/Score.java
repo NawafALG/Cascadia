@@ -8,6 +8,7 @@ public class Score {
                           6    tile   3
                              5     4
     */
+
     public static int calculateSpace(int col,int y) {
         if (y % 2 != 0){
             if (col % 2 == 1) return 0;
@@ -260,6 +261,8 @@ public class Score {
 
 
     private static boolean elkcounted[][];
+
+    // this is for elk score calcualtion
     private static boolean Elkvalidtopright(PrintBoard board,int clusterSize, int x, int y){
         boolean found = false;
         if(!board.obj[x][y].getAnimalPlaced().equals("E"))
@@ -424,7 +427,7 @@ public class Score {
 
     }
 
-    // hawk
+    // hawk score calcualtion
     public static int GetHawkScore(PrintBoard board){
         int hawkscore = 0;
         for (int row = 0; row < board.rows; row++) {
@@ -464,7 +467,7 @@ public class Score {
 
         return hawkscore;
     }
-    // Foxes
+    // Foxes scores
     public static int GetFoxScore(PrintBoard board){
         int foxscore = 0;
 
@@ -613,7 +616,7 @@ public class Score {
 
 
 
-
+    // this returns largest habitat chunk size
     public static int GetMaxHabitatChunkSize(PrintBoard board, String Habitat){
         int rows = board.rows;
         int cols = board.cols;

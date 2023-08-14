@@ -4,8 +4,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class PrintBoard {
-    int rows = 5;
-    int cols = 5;
+    int rows = 7;
+    int cols = 8;
     Tile[][] obj;
 
     String playername;

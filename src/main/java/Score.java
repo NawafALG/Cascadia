@@ -624,45 +624,34 @@ public class Score {
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 int chunkSize;
-                if (( board.obj[row][col].upinfo.equals(Habitat) && !visited[row][col])) {
-                    chunkSize = Habitatdfs(board, visited, row, col, Habitat, 1);
-                    largestChunkSize = Math.max(largestChunkSize, chunkSize);
-                }
-                if (( board.obj[row][col].upinfo.equals(Habitat) && !visited[row][col])) {
-                    chunkSize = Habitatdfs(board, visited, row, col, Habitat, 2);
-                    largestChunkSize = Math.max(largestChunkSize, chunkSize);
-                }
-                if (( board.obj[row][col].rightinfo.equals(Habitat) && !visited[row][col])) {
-                    chunkSize = Habitatdfs(board, visited, row, col, Habitat, 3);
-                    largestChunkSize = Math.max(largestChunkSize, chunkSize);
-                }
-                if (( board.obj[row][col].downinfo.equals(Habitat) && !visited[row][col])) {
-                    chunkSize = Habitatdfs(board, visited, row, col, Habitat, 4);
-                    largestChunkSize = Math.max(largestChunkSize, chunkSize);
-                }
-                if (( board.obj[row][col].downinfo.equals(Habitat) && !visited[row][col])) {
-                    chunkSize = Habitatdfs(board, visited, row, col, Habitat, 5);
-                    largestChunkSize = Math.max(largestChunkSize, chunkSize);
-                }
-                if (( board.obj[row][col].leftinfo.equals(Habitat) && !visited[row][col])) {
-                    chunkSize = Habitatdfs(board, visited, row, col, Habitat, 6);
-                    largestChunkSize = Math.max(largestChunkSize, chunkSize);
+                if(!visited[row][col]) {
+//                    if ((board.obj[row][col].upinfo.equals(Habitat))) {
+//                        chunkSize = Habitatdfs(board, visited, row, col, Habitat, 0);
+//                        largestChunkSize = Math.max(largestChunkSize, chunkSize);
+//                    }
+//                if (( board.obj[row][col].upinfo.equals(Habitat) && !visited[row][col])) {
+//                    chunkSize = Habitatdfs(board, visited, row, col, Habitat, 2);
+//                    largestChunkSize = Math.max(largestChunkSize, chunkSize);
+//                }
+                    if ((board.obj[row][col].rightinfo.equals(Habitat) )) {
+                        chunkSize = Habitatdfs(board, visited, row, col, Habitat, 0);
+                        largestChunkSize = Math.max(largestChunkSize, chunkSize);
+                    }
+//                if (( board.obj[row][col].downinfo.equals(Habitat) && !visited[row][col])) {
+//                    chunkSize = Habitatdfs(board, visited, row, col, Habitat, 4);
+//                    largestChunkSize = Math.max(largestChunkSize, chunkSize);
+//                }
+//                    if ((board.obj[row][col].downinfo.equals(Habitat) )) {
+//                        chunkSize = Habitatdfs(board, visited, row, col, Habitat, 0);
+//                        largestChunkSize = Math.max(largestChunkSize, chunkSize);
+//                    }
+//                    if ((board.obj[row][col].leftinfo.equals(Habitat) )) {
+//                        chunkSize = Habitatdfs(board, visited, row, col, Habitat, 0);
+//                        largestChunkSize = Math.max(largestChunkSize, chunkSize);
+//                    }
                 }
             }
         }
-        for(int i=0;i<rows;i++){
-            if(i%2==0)
-                System.out.print(" ");
-            for(int j=0;j<cols;j++){
-
-                if(visited[i][j])
-                    System.out.print("1 ");
-                else
-                    System.out.print("0 ");
-            }
-            System.out.print("\n");
-        }
-        System.out.print("\n");
         return largestChunkSize;
     }
     public static int Habitatdfs(PrintBoard board, boolean[][] visited, int row, int col, String targetChar, int position) {
@@ -671,6 +660,7 @@ public class Score {
         }
         if(board.obj[row][col].placed==false)
             return 0;
+
         if(position==1 && !board.obj[row][col].downinfo.equals(targetChar))
             return 0;
         if(position==2 && !board.obj[row][col].downinfo.equals(targetChar))

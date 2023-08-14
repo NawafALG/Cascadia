@@ -42,6 +42,17 @@ public class Game {
         animalPool = getRandomItemsWithMaxDuplicates(animalPool, 4, 2);
     }
 
+    private void updateAnimalPool(){
+        animalPool = new ArrayList<>();
+        animalPool.add("B");
+        animalPool.add("S");
+        animalPool.add("H");
+        animalPool.add("E");
+        animalPool.add("F");
+
+        animalPool = getRandomItemsWithMaxDuplicates(animalPool, 4, 2);
+    }
+
     public void PrintCurrentPlayerBoard(){
         board[pindex].print();
     }
@@ -122,9 +133,12 @@ public class Game {
         printAnimalTileChoices();
 
         // animal tile placement starts
-        System.out.print("\nChoose your Animal Tile:");
+        System.out.print("\nChoose your Animal Tile: (press 0 to not place)");
         userChoice = scanner.nextInt();
-        if(userChoice-1>4 || userChoice-1<1){
+        if(userChoice==0){
+
+        }
+        else if(userChoice-1>4 || userChoice-1<1){
             while(userChoice-1<=4 && userChoice-1>0){
                 System.out.print("\nIncorrect input!\nChoose your Animal tile:");
                 userChoice = scanner.nextInt();
@@ -149,12 +163,15 @@ public class Game {
         board[pindex].print();
 
         // toggle player index value
-//        if(pindex == 0)
-//            pindex = 1;
-//        else
-//            pindex = 0;
+        if(pindex == 0)
+            pindex = 1;
+        else
+            pindex = 0;
 
         turnNumber++;
+
+        updateAnimalPool();
+
         try {
             Thread.sleep(800);
         } catch (InterruptedException e) {
@@ -246,7 +263,9 @@ public class Game {
             while(!(userChoice>0 && userChoice<4)) {
                 System.out.print("\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\terror\n\t\t\t\t\t\t\t\tEnter your choice:");
                 userChoice = scanner.nextInt();
-
+                if(userChoice==1){
+                    printHelp();
+                }
             }
         }
         return userChoice;
@@ -309,6 +328,7 @@ public class Game {
         printScoreBoard();
     }
     public void printScoreBoard(){
+
         System.out.println(Colors.HEADER3+"Players\t\t\t\t\t"+player1Name+"\t\t"+player2Name+""+Colors.reset);
         System.out.println("Bear\t\t\t\t\t"+Score.GetBearScore(board[0])+"\t\t\t"+Score.GetBearScore(board[1]));
         System.out.println("Hawk\t\t\t\t\t"+Score.GetHawkScore(board[0])+"\t\t\t"+Score.GetHawkScore(board[1]));
@@ -316,17 +336,46 @@ public class Game {
         System.out.println("Salmon\t\t\t\t\t"+Score.GetSalmonScore(board[0])+"\t\t\t"+Score.GetSalmonScore(board[1]));
         System.out.println("Fox\t\t\t\t\t\t"+Score.GetFoxScore(board[0])+"\t\t\t"+Score.GetFoxScore(board[1]));
 
-        System.out.println("\nForest\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "FRST")+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "FRST"));
-        System.out.println("Wetland\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "GRASS")+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "GRASS"));
-        System.out.println("River\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "RIVER")+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "RIVER"));
-        System.out.println("Mountain\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "MNTAIN")+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "MNTAIN"));
-        System.out.println("Prairie\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "YLW")+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "YLW"));
+
+        int scorePlayer1 =Score.GetBearScore(board[0])+Score.GetHawkScore(board[0])+Score.GetElkScore(board[0])+Score.GetSalmonScore(board[0])+Score.GetFoxScore(board[0]);
+        int scorePlayer2 =Score.GetBearScore(board[1])+Score.GetHawkScore(board[1])+Score.GetElkScore(board[1])+Score.GetSalmonScore(board[1])+Score.GetFoxScore(board[1]);
+
+        String[] habitatTypes = { "FRST", "GRASS", "RIVER", "MNTAIN", "YLW" };
+        int[] p2arr = new int[habitatTypes.length];
+        int[] p1arr = new int[habitatTypes.length];
+        for(int i=0;i<5;i++){
+            if(Score.GetMaxHabitatChunkSize(board[0],habitatTypes[i]) > Score.GetMaxHabitatChunkSize(board[1], habitatTypes[i])){
+                p1arr[i] = 2;
+                p2arr[i] = 0;
+
+                scorePlayer1+=Score.GetMaxHabitatChunkSize(board[0],habitatTypes[i])+2;
+                scorePlayer2+=Score.GetMaxHabitatChunkSize(board[1],habitatTypes[i]);
+            }
+            else if(Score.GetMaxHabitatChunkSize(board[0],habitatTypes[i]) == Score.GetMaxHabitatChunkSize(board[1], habitatTypes[i])){
+                p1arr[i] = 1;
+                p2arr[i] = 1;
+
+                scorePlayer1+=Score.GetMaxHabitatChunkSize(board[0],habitatTypes[i])+1;
+                scorePlayer2+=Score.GetMaxHabitatChunkSize(board[1],habitatTypes[i])+1;
+            }
+            else{
+                p1arr[i] = 0;
+                p2arr[i] = 2;
+
+                scorePlayer1+=Score.GetMaxHabitatChunkSize(board[0],habitatTypes[i]);
+                scorePlayer2+=Score.GetMaxHabitatChunkSize(board[1],habitatTypes[i])+2;
+            }
+        }
 
 
-        int scorePlayer1=0;
-        int scorePlayer2=0;
+        System.out.println("\nForest\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "FRST")+"|"+p1arr[0]+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "FRST") +"|"+p2arr[0]);
+        System.out.println("Wetland\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "GRASS")+"|"+p1arr[1]+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "GRASS" +"|"+p2arr[1]));
+        System.out.println("River\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "RIVER")+"|"+p1arr[2]+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "RIVER") +"|"+p2arr[2]);
+        System.out.println("Mountain\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "MNTAIN")+"|"+p1arr[3]+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "MNTAIN") +"|"+p2arr[3]);
+        System.out.println("Prairie\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "YLW")+"|"+p1arr[4]+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "YLW") +"|"+p2arr[4]);
 
-        System.out.print("\n"+Colors.HEADER2+"Final score\t\t\t\t\t"+scorePlayer1+"\t\t\t"+scorePlayer2+Colors.reset);
+
+        System.out.print("\n"+Colors.HEADER2+"Final score\t\t\t\t"+scorePlayer1+"\t\t\t"+scorePlayer2+Colors.reset);
 
     }
 

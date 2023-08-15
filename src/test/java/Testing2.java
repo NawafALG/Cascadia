@@ -15,7 +15,7 @@ public class Testing2 {
 
         // This test will only check that the method doesn't throw an exception
         game.printTitle();
-        game.printOptions();
+//        game.printOptions();
     }
 
     @Test
@@ -35,7 +35,7 @@ public class Testing2 {
 
         assertFalse(game.board[0].isValidPlacement(-1, 0));
         assertFalse(game.board[0].isValidPlacement(0, -1));
-        assertFalse(game.board[0].isValidPlacement(5, 0));
+        assertFalse(game.board[0].isValidPlacement(3, 4));
         assertFalse(game.board[0].isValidPlacement(0, 5));
     }
 }

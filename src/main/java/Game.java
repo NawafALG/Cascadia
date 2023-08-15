@@ -3,6 +3,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import static java.lang.System.exit;
+
 public class Game {
     Tile tiles[]; // the board is distributed in tiles objs
     PrintBoard board[]; // game board
@@ -12,6 +14,8 @@ public class Game {
     String player1Name, player2Name;
 
     int turnNumber;
+
+    int maximumTurns;
     int pindex; // player turn index
     public void createtiles(){
         for (int i = 0; i < 4; i++){
@@ -21,6 +25,7 @@ public class Game {
     }
     Game(){
         turnNumber = 0;
+
 
         board = new PrintBoard[2];
         board[0] = new PrintBoard();
@@ -34,7 +39,6 @@ public class Game {
 
         animalPool = new ArrayList<>();
         animalPool.add("B");
-        animalPool.add("S");
         animalPool.add("H");
         animalPool.add("E");
         animalPool.add("F");
@@ -45,7 +49,6 @@ public class Game {
     private void updateAnimalPool(){
         animalPool = new ArrayList<>();
         animalPool.add("B");
-        animalPool.add("S");
         animalPool.add("H");
         animalPool.add("E");
         animalPool.add("F");
@@ -55,6 +58,13 @@ public class Game {
 
     public void PrintCurrentPlayerBoard(){
         board[pindex].print();
+    }
+
+    public void setturnnumber(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Choose number of turns until game ends:");
+        int userChoice = scanner.nextInt();
+        maximumTurns = userChoice;
     }
 
     public void printTileChoices(){ // prints the tiles dislpayed to player to choose from on every turn
@@ -256,18 +266,35 @@ public class Game {
         System.out.println("\t\t\t\t\t\t\t\t2. How to Play");
         System.out.print("\t\t\t\t\t\t\t\t3. Exit\n\n\t\t\t\t\t\t\t\tEnter your choice:");
 
+//        int userChoice = scanner.nextInt();
+//        if (userChoice>0 && userChoice<4){
+//            if(userChoice==1){
+//                printHelp();
+//            }
+//            return userChoice;
+//        }
+//        else{
+//            while(!(userChoice>0 && userChoice<4)) {
+//                System.out.print("\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\terror\n\t\t\t\t\t\t\t\tEnter your choice:");
+//                userChoice = scanner.nextInt();
+//                if(userChoice==1){
+//                    printHelp();
+//                }
+//            }
+//        }
+
         int userChoice = scanner.nextInt();
-        if (userChoice>0 && userChoice<4)
-            return userChoice;
-        else{
-            while(!(userChoice>0 && userChoice<4)) {
-                System.out.print("\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\terror\n\t\t\t\t\t\t\t\tEnter your choice:");
-                userChoice = scanner.nextInt();
-                if(userChoice==1){
-                    printHelp();
-                }
-            }
+
+        if(userChoice==2){
+            printHelp();
         }
+        else if(userChoice==1){
+            return userChoice;
+        }
+        else if(userChoice == 3){
+            exit(0);
+        }
+
         return userChoice;
     }
     public void printHelp(){
@@ -288,7 +315,7 @@ public class Game {
         System.out.println("----- HAWK SCORING CARD (A) -----");
         System.out.println("Score points for each Hawk for total number of Hawks that are not adjacent to any other Hawks.\n");
 
-        System.out.println("----- SALMON SCORING CARD (C) -----");
+        System.out.println("----- SALMON SCORING CARD (A) -----");
         System.out.println("Score points for each run of Salmon, depending on the number/length of Salmon in the run.");
         System.out.println("A run is defined as a group of adjacent Salmon where each Salmon is adjacent to no more than two other Salmon.");
         System.out.println("A group of three Salmon in a triangle shape may count as a run, but no other Salmon may be attached to this run.");
@@ -297,6 +324,7 @@ public class Game {
         Scanner scanner = new Scanner(System.in);
         int userChoice = scanner.nextInt();
         System.out.println("__________________________________________________________________________________________");
+        printOptions();
     }
     public void askNames(){
         Scanner scanner = new Scanner(System.in);
@@ -329,16 +357,35 @@ public class Game {
     }
     public void printScoreBoard(){
 
+        int p1score[] = new int[5];
+        int p2score[] = new int[5];
+
+        p1score[0] = Score.GetBearScore(board[0]);
+        p1score[1] = Score.GetHawkScore(board[0]);
+        p1score[2] = Score.GetElkScore(board[0]);
+        p1score[3] = Score.GetSalmonScore(board[0]);
+        p1score[4] = Score.GetFoxScore(board[0]);
+
+        p2score[0] = Score.GetBearScore(board[1]);
+        p2score[1] = Score.GetHawkScore(board[1]);
+        p2score[2] = Score.GetElkScore(board[1]);
+        p2score[3] = Score.GetSalmonScore(board[1]);
+        p2score[4] = Score.GetFoxScore(board[1]);
+
         System.out.println(Colors.HEADER3+"Players\t\t\t\t\t"+player1Name+"\t\t"+player2Name+""+Colors.reset);
-        System.out.println("Bear\t\t\t\t\t"+Score.GetBearScore(board[0])+"\t\t\t"+Score.GetBearScore(board[1]));
-        System.out.println("Hawk\t\t\t\t\t"+Score.GetHawkScore(board[0])+"\t\t\t"+Score.GetHawkScore(board[1]));
-        System.out.println("Elk\t\t\t\t\t\t"+Score.GetElkScore(board[0])+"\t\t\t"+Score.GetElkScore(board[1]));
-        System.out.println("Salmon\t\t\t\t\t"+Score.GetSalmonScore(board[0])+"\t\t\t"+Score.GetSalmonScore(board[1]));
-        System.out.println("Fox\t\t\t\t\t\t"+Score.GetFoxScore(board[0])+"\t\t\t"+Score.GetFoxScore(board[1]));
+        System.out.println("Bear\t\t\t\t\t"+p1score[0]+"\t\t\t"+p2score[0]);
+        System.out.println("Hawk\t\t\t\t\t"+p1score[1]+"\t\t\t"+p2score[1]);
+        System.out.println("Elk\t\t\t\t\t\t"+p1score[2]+"\t\t\t"+p2score[2]);
+        System.out.println("Salmon\t\t\t\t\t"+p1score[3]+"\t\t\t"+p2score[3]);
+        System.out.println("Fox\t\t\t\t\t\t"+p1score[4]+"\t\t\t"+p2score[4]);
 
-
-        int scorePlayer1 =Score.GetBearScore(board[0])+Score.GetHawkScore(board[0])+Score.GetElkScore(board[0])+Score.GetSalmonScore(board[0])+Score.GetFoxScore(board[0]);
-        int scorePlayer2 =Score.GetBearScore(board[1])+Score.GetHawkScore(board[1])+Score.GetElkScore(board[1])+Score.GetSalmonScore(board[1])+Score.GetFoxScore(board[1]);
+        int scorePlayer1 = 0, scorePlayer2 = 0;
+        for(int i = 0 ;i<5;i++){
+            scorePlayer1 +=p1score[i];
+            scorePlayer2 +=p2score[i];
+        }
+//        int scorePlayer1 =Score.GetBearScore(board[0])+Score.GetHawkScore(board[0])+Score.GetElkScore(board[0])+Score.GetSalmonScore(board[0])+Score.GetFoxScore(board[0]);
+//        int scorePlayer2 =Score.GetBearScore(board[1])+Score.GetHawkScore(board[1])+Score.GetElkScore(board[1])+Score.GetSalmonScore(board[1])+Score.GetFoxScore(board[1]);
 
         String[] habitatTypes = { "FRST", "GRASS", "RIVER", "MNTAIN", "YLW" };
         int[] p2arr = new int[habitatTypes.length];

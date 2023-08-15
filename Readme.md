@@ -1,4 +1,4 @@
-# Cascadia Game
+# Cascadia Game Description
 
 Welcome to the README file for the **Cascadia** game, an immersive experience where you become the steward of a diverse virtual ecosystem. Make impactful decisions to maintain the delicate balance of nature, manage species interactions, and score points strategically. This README provides a comprehensive overview of the game, its features, installation instructions, game rules, and scoring guidelines.
 

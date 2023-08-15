@@ -375,9 +375,9 @@ public class Game {
         System.out.println(Colors.HEADER3+"Players\t\t\t\t\t"+player1Name+"\t\t"+player2Name+""+Colors.reset);
         System.out.println("Bear\t\t\t\t\t"+p1score[0]+"\t\t\t"+p2score[0]);
         System.out.println("Hawk\t\t\t\t\t"+p1score[1]+"\t\t\t"+p2score[1]);
-        System.out.println("Elk\t\t\t\t\t\t"+p1score[2]+"\t\t\t"+p2score[2]);
+        System.out.println("Elk\t\t\t\t\t"+p1score[2]+"\t\t\t"+p2score[2]);
         System.out.println("Salmon\t\t\t\t\t"+p1score[3]+"\t\t\t"+p2score[3]);
-        System.out.println("Fox\t\t\t\t\t\t"+p1score[4]+"\t\t\t"+p2score[4]);
+        System.out.println("Fox\t\t\t\t\t"+p1score[4]+"\t\t\t"+p2score[4]);
 
         int scorePlayer1 = 0, scorePlayer2 = 0;
         for(int i = 0 ;i<5;i++){
@@ -405,7 +405,7 @@ public class Game {
                 scorePlayer1+=Score.GetMaxHabitatChunkSize(board[0],habitatTypes[i])+1;
                 scorePlayer2+=Score.GetMaxHabitatChunkSize(board[1],habitatTypes[i])+1;
             }
-            else{
+            else if(Score.GetMaxHabitatChunkSize(board[0],habitatTypes[i]) < Score.GetMaxHabitatChunkSize(board[1], habitatTypes[i])){
                 p1arr[i] = 0;
                 p2arr[i] = 2;
 
@@ -416,7 +416,7 @@ public class Game {
 
 
         System.out.println("\nForest\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "FRST")+"|"+p1arr[0]+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "FRST") +"|"+p2arr[0]);
-        System.out.println("Wetland\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "GRASS")+"|"+p1arr[1]+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "GRASS" +"|"+p2arr[1]));
+        System.out.println("Wetland\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "GRASS")+"|"+p1arr[1]+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "GRASS") +"|"+p2arr[1]);
         System.out.println("River\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "RIVER")+"|"+p1arr[2]+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "RIVER") +"|"+p2arr[2]);
         System.out.println("Mountain\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "MNTAIN")+"|"+p1arr[3]+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "MNTAIN") +"|"+p2arr[3]);
         System.out.println("Prairie\t\t\t\t\t"+Score.GetMaxHabitatChunkSize(board[0], "YLW")+"|"+p1arr[4]+"\t\t\t"+Score.GetMaxHabitatChunkSize(board[1], "YLW") +"|"+p2arr[4]);

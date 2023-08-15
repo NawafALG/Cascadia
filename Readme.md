@@ -26,11 +26,16 @@ To play Cascadia, follow these steps:
 - **Memory:** 100Mb [Minimum recommended memory]
 - **Storage:** 50Mb [Minimum recommended storage]
 
-## Getting Started
+## Gameplay Overview
+In Cascadia, players take turns building their own terrain areas using hexagonal habitat tiles. Each turn, you select a new habitat tile, each paired with a corresponding wildlife token. These tiles are strategically placed adjacent to existing tiles in your terrain area, while the wildlife tokens find their homes on suitable habitats. The game offers a blend of strategy and decision-making. You'll strive to create interconnected habitats to reduce fragmentation and establish wildlife corridors. Your objective is to have the largest areas of each habitat type, with the opportunity for bonuses if your areas surpass those of your fellow players.
 
-Upon launching the game, explore the user interface, learn about species interactions, and engage with challenges presented.
+Wildlife Strategy
+A key element of Cascadia is the placement of wildlife tokens. Your success hinges on aligning wildlife with their preferred habitats to maximize your point potential. Scoring is determined by random criteria outlined in wildlife-specific scoring cards. For instance, certain wildlife might seek isolation from their kind, while others thrive in the company of diverse animals. The challenge lies in deciphering these preferences and arranging your terrain area accordingly.
 
-## Game Rules and Scoring
+Nature Tokens
+As you navigate the delicate balance of habitat and wildlife, nature tokens offer a strategic advantage. Spend these tokens to choose your preferred habitat tiles and wildlife tokens, granting you greater control over your approach and enhancing your tactical gameplay. Immerse Yourself in the Pacific Northwest Cascadia captures the essence of the Pacific Northwest's stunning landscapes and diverse ecosystems. As you build your terrain and populate it with wildlife, you'll develop an appreciation for the region's natural beauty and the intricate relationships between habitats and the creatures that inhabit them.
+
+## Scoring
 
 **Bears(A):** Create groups of bears in various shapes and sizes, ensuring each group contains the exact number of bears as two. Score points based on the total number of pairs of bears in your groups.
 

@@ -14,9 +14,9 @@ Welcome to the README file for the **Cascadia** game, an immersive experience wh
 
 To play Cascadia, follow these steps:
 
-1. Download the game installer from [link-to-download].
-2. Run the installer and follow on-screen instructions to install the game.
-3. Launch the game from the desktop shortcut or Start menu.
+1. Download the Cmder installer from [https://cmder.app/].
+2. Run the installer and in the terminal change the directory to where Cascadia_game.jar is present
+3. Paste this code "java -jar Cascadia_game.jar" into cmder terminal and press enter
 4. Immerse yourself in the world of Cascadia and embark on your journey as an ecosystem manager.
 
 ## System Requirements

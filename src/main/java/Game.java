@@ -372,12 +372,26 @@ public class Game {
         p2score[3] = Score.GetSalmonScore(board[1]);
         p2score[4] = Score.GetFoxScore(board[1]);
 
-        System.out.println(Colors.HEADER3+"Players\t\t\t\t\t"+player1Name+"\t\t"+player2Name+""+Colors.reset);
+        if(player1Name.length()>=8)
+            System.out.println(Colors.HEADER3+"Players\t\t\t\t\t"+player1Name+"\t"+player2Name+""+Colors.reset);
+        else if(player1Name.length()<4)
+            System.out.println(Colors.HEADER3+"Players\t\t\t\t\t"+player1Name+"\t\t\t"+player2Name+""+Colors.reset);
+        else if(player1Name.length()>=4)
+            System.out.println(Colors.HEADER3+"Players\t\t\t\t\t"+player1Name+"\t\t"+player2Name+""+Colors.reset);
+
+//        if(player1Name.length()>=8)
+//            System.out.println(Colors.HEADER3+"Players\t\t\t\t\t"+player1Name+"\t\t"+player2Name+""+Colors.reset);
+//        else if(player1Name.length()<4)
+//            System.out.println(Colors.HEADER3+"Players\t\t\t\t\t"+player1Name+"\t\t\t"+player2Name+""+Colors.reset);
+//        else if(player1Name.length()>=4)
+//            System.out.println(Colors.HEADER3+"Players\t\t\t\t\t"+player1Name+"\t\t\t"+player2Name+""+Colors.reset);
+
+
         System.out.println("Bear\t\t\t\t\t"+p1score[0]+"\t\t\t"+p2score[0]);
         System.out.println("Hawk\t\t\t\t\t"+p1score[1]+"\t\t\t"+p2score[1]);
-        System.out.println("Elk\t\t\t\t\t"+p1score[2]+"\t\t\t"+p2score[2]);
+        System.out.println("Elk\t\t\t\t\t\t"+p1score[2]+"\t\t\t"+p2score[2]);
         System.out.println("Salmon\t\t\t\t\t"+p1score[3]+"\t\t\t"+p2score[3]);
-        System.out.println("Fox\t\t\t\t\t"+p1score[4]+"\t\t\t"+p2score[4]);
+        System.out.println("Fox\t\t\t\t\t\t"+p1score[4]+"\t\t\t"+p2score[4]);
 
         int scorePlayer1 = 0, scorePlayer2 = 0;
         for(int i = 0 ;i<5;i++){
